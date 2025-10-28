@@ -1,265 +1,441 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site escola</title>
-    <style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escola Estadual Sanico Teles</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #ffffff;
+      color: #000;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-        body{
-            margin: 0px;
-        }
-        .topo{
-            background-color: rgb(6, 57, 223);
-            display: flex;
-            color: white;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .menu{
-            flex-direction: row;
-            display: flex;
-            align-items: center;
-            gap: 9px;
-        }
-        .modo{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: auto;
-        }
-        
-        :root {
-          --toggle-bg-light: #ebebeb;
-          --toggle-border: #232323;
-          --toggle-thumb: #232323;
-          --toggle-bg-dark: #232323;
-          --toggle-thumb-dark: #ebebeb;
-        }
+    /* TOPO */
+    .topo {
+      background-color: rgb(6, 57, 223);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+    }
 
-        .theme-switch {
-          position: relative;
-          display: inline-block;
-          width: 45px;
-          height: 25px;
-        }
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        /* Esconde o input */
-        .theme-switch input {
-          opacity: 0;
-          width: 0;
-          height: 0;
-        }
+    .menu svg {
+      cursor: pointer;
+    }
 
-        /* Trilha do botão */
-        .slider {
-          position: absolute;
-          cursor: pointer;
-          inset: 0;
-          background-color: var(--toggle-bg-light);
-          border: 1px solid var(--toggle-border);
-          border-radius: 25px;
-          transition: background-color 0.3s, border-color 0.3s;
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
-          padding: 0 4px;
-        }
+    .modo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
 
-        /* Bolinha com emoji */
-        .slider .emoji {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 17px;
-          height: 17px;
-          border-radius: 50%;
-          background-color: var(--toggle-thumb);
-          color: #fff;
-          font-size: 12px;
-          transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
-        }
+    /* SWITCH DE MODO ESCURO */
+    :root {
+      --toggle-bg-light: #ebebeb;
+      --toggle-border: #232323;
+      --toggle-thumb: #232323;
+      --toggle-bg-dark: #232323;
+      --toggle-thumb-dark: #ebebeb;
+    }
 
-        /* Quando ativado (modo escuro) */
-        input:checked + .slider {
-          background-color: var(--toggle-bg-dark);
-          border-color: var(--toggle-thumb-dark);
-          justify-content: flex-end;
-          padding: 0 4px;
-        }
+    .theme-switch {
+      position: relative;
+      display: inline-block;
+      width: 45px;
+      height: 25px;
+    }
 
-        input:checked + .slider .emoji {
-          background-color: var(--toggle-thumb-dark);
-          color: #000;
-        }
+    .theme-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
 
-        /* Modo escuro global */
-        body.dark-mode {
-          background-color: #121212;
-          color: #f5f5f5;
-        }
-        :root {
-  --bg-color: #ffffff;
-  --text-color: #232323;
-  --accent-color: #232323;
-  --section-bg: #f5f5f5;
-}
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: var(--toggle-bg-light);
+      border: 1px solid var(--toggle-border);
+      border-radius: 25px;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 4px;
+    }
 
-body.dark-mode {
-  --bg-color: #121212;
-  --text-color: #f1f1f1;
-  --accent-color: #ebebeb;
-  --section-bg: #1e1e1e;
-}
+    .slider .emoji {
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background-color: var(--toggle-thumb);
+      color: #fff;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+    }
 
-.hero-section {
-  width: 90%;
-  max-width: 900px;
-  margin: 3rem auto;
-  padding: 3rem 2rem;
-  background-color: var(--section-bg);
-  color: var(--text-color);
-  border-radius: 16px; /* 💡 Bordas suaves */
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* 💡 Sombra suave */
-  transition: background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
-  text-align: center;
-}
+    input:checked + .slider {
+      background-color: var(--toggle-bg-dark);
+      border-color: var(--toggle-thumb-dark);
+      justify-content: flex-end;
+    }
 
-.hero-content h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  line-height: 1.2;
-}
+    input:checked + .slider .emoji {
+      background-color: var(--toggle-thumb-dark);
+      color: #000;
+    }
 
-.hero-content p {
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
-  opacity: 0.85;
-}
+    /* MODO ESCURO GLOBAL */
+    body.dark-mode {
+      background-color: #121212;
+      color: #f5f5f5;
+    }
 
-/* Botão de ação */
-.cta-button {
-  background-color: var(--accent-color);
-  color: var(--bg-color);
-  border: 2px solid var(--accent-color);
-  padding: 0.8rem 1.6rem;
-  border-radius: 25px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
+    body.dark-mode .hero-section {
+      background-color: #1e1e1e;
+      color: #f5f5f5;
+    }
 
-}
+    body.dark-mode .card {
+      background-color: #1e1e1e;
+      color: #f5f5f5;
+    }
 
-.cta-button:hover {
-  background-color: transparent;
-  color: var(--accent-color);
-  transform: scale(1.05);
- 
-}
+    body.dark-mode .cta-button {
+      border-color: #f5f5f5;
+      color: #f5f5f5;
+    }
 
+    body.dark-mode .cta-button:hover {
+      background-color: #f5f5f5;
+      color: #121212;
+    }
 
-        .tit{
-            display: flex;
-            justify-content:center;
-        }
-    </style>
+    /* TÍTULOS */
+    .tit {
+      text-align: left;
+      margin-left: 60px;
+      margin-top: 40px;
+      font-size: 20px;
+      text-transform: lowercase;
+    }
+
+    /* SEÇÕES */
+    .hero-section {
+      width: 80%;
+      background-color: #f5f5f5;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .hero-content {
+      text-align: left;
+    }
+
+    .hero-content p {
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    /* BOTÕES ALINHADOS À DIREITA */
+    .button-container {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 15px;
+    }
+
+    .cta-button {
+      background-color: transparent;
+      border: 1px solid #000;
+      border-radius: 5px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: 0.3s;
+    }
+
+    .cta-button:hover {
+      background-color: #000;
+      color: #fff;
+    }
+
+    /* CONTAINER PARA NOTÍCIAS LADO A LADO */
+    .noticias-container {
+      display: flex;
+      gap: 20px;
+      width: 80%;
+      margin: 20px auto;
+      flex-wrap: wrap;
+    }
+
+    .noticia-card {
+      flex: 1;
+      min-width: 300px;
+      background-color: #f5f5f5;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    body.dark-mode .noticia-card {
+      background-color: #1e1e1e;
+      color: #f5f5f5;
+    }
+
+    /* ACESSO RÁPIDO */
+    .acesso-rapido {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+      width: 80%;
+      margin: 20px auto;
+    }
+
+    .card {
+      flex: 1;
+      min-width: 250px;
+      background-color: #f5f5f5;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .card h2 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 768px) {
+      .acesso-rapido {
+        flex-direction: column;
+      }
+      
+      .noticias-container {
+        flex-direction: column;
+        width: 90%;
+      }
+      
+      .noticia-card {
+        min-width: auto;
+      }
+      
+      .tit {
+        margin-left: 20px;
+        font-size: 18px;
+      }
+      
+      .hero-section {
+        width: 90%;
+        margin: 15px auto;
+        padding: 15px;
+      }
+      
+      .topo {
+        padding: 10px 15px;
+      }
+      
+      .topo h1 {
+        font-size: 18px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class = "topo">
-        <div class = "menu">
-                <!-- Ícone de menu -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/>
-            </svg>
-            <i class="fa-solid fa-bars"></i>
-
-
-            <h1>Escola Estadual Sanico teles</h1>
-        </div>
-        <div class = "modo">
-            <!-- Ícone de usuário -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
-            </svg>
-        
-            <i class="fa-solid fa-user"></i>
-           
-            <label class="theme-switch">
-              <input type="checkbox" id="theme-toggle" aria-label="Alternar modo escuro" />
-              <span class="slider">
-                <span class="emoji">🌞</span>
-              </span>
-            </label>
-
-
-        </div>
+  <div class="topo">
+    <div class="menu">
+      <!-- Ícone de menu -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/>
+      </svg>
+      <h1>Escola Estadual Sanico Teles</h1>
     </div>
 
-    <h1 class = "tit">Apresentação da escola</h1>
+    <div class="modo">
+      <!-- Ícone de usuário -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
+      </svg>
 
-    <section class="hero-section">
-      <div class="hero-content">
-        <h1>Bem-vindo ao Meu Site</h1>
-        <p>Explore conteúdos incríveis com modo claro e escuro 🌗</p>
-        <button class="cta-button">saiba mais</button>
+      <!-- Switch modo escuro -->
+      <label class="theme-switch">
+        <input type="checkbox" id="theme-toggle" aria-label="Alternar modo escuro" />
+        <span class="slider">
+          <span class="emoji">🌞</span>
+        </span>
+      </label>
+    </div>
+  </div>
+
+  <h1 class="tit">Apresentação da escola</h1>
+  <section class="hero-section">
+    <div class="hero-content">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id.</p>
+      <div class="button-container">
+        <button class="cta-button">saber mais</button>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <h1 class = "tit">evento do mês</h1>
-
-    <section class="hero-section">
-      <div class="hero-content">
-        <h1>Bem-vindo ao Meu Site</h1>
-        <p>Explore conteúdos incríveis com modo claro e escuro 🌗</p>
-        <button class="cta-button">ver calendario</button>
+  <h1 class="tit">Evento do mês</h1>
+  <section class="hero-section">
+    <div class="hero-content">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus.</p>
+      <div class="button-container">
+        <button class="cta-button">ver calendário</button>
       </div>
-    </section>
+    </div>
+  </section>
 
-
-    <h1 class = "tit">Ultimas Noticias</h1>
-
-    <section class="hero-section">
+  <h1 class="tit">Últimas notícias</h1>
+  <div class="noticias-container">
+    <div class="noticia-card">
       <div class="hero-content">
-        <h1>Bem-vindo ao Meu Site</h1>
-        <p>Explore conteúdos incríveis com modo claro e escuro 🌗</p>
-        <button class="cta-button">ver Noticias</button>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id.</p>
       </div>
-    </section>
-
-
-    <h1 class = "tit">Acesso Rápido</h1>
-
-    <section class="hero-section">
+    </div>
+    <div class="noticia-card">
       <div class="hero-content">
-        <h1>Bem-vindo ao Meu Site</h1>
-        <p>Explore conteúdos incríveis com modo claro e escuro 🌗</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id.</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Botão "ver notícias" separado -->
+  <div style="width: 80%; margin: 0 auto;">
+    <div class="button-container">
+      <button class="cta-button">ver notícias</button>
+    </div>
+  </div>
+
+  <h1 class="tit">Acesso rápido</h1>
+  <div class="acesso-rapido">
+    <div class="card">
+      <h2>Área para o aluno</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec.</p>
+    </div>
+    <div class="card">
+      <h2>Área para os pais</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec.</p>
+    </div>
+    <div class="card">
+      <h2>Área para os professores</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec.</p>
+    </div>
+  </div>
+
+  <script>
+    // Aguarda o carregamento completo do DOM
+    document.addEventListener('DOMContentLoaded', function() {
+      // Elementos do DOM
+      const toggle = document.getElementById('theme-toggle');
+      const body = document.body;
+      const emoji = document.querySelector('.emoji');
+
+      // Verifica se os elementos existem antes de usar
+      if (!toggle || !body || !emoji) {
+        console.error('Elementos necessários não foram encontrados no DOM');
+        return;
+      }
+
+      // Função para aplicar o tema
+      function applyTheme(isDark) {
+        if (isDark) {
+          body.classList.add('dark-mode');
+          toggle.checked = true;
+          emoji.textContent = '🌙';
+        } else {
+          body.classList.remove('dark-mode');
+          toggle.checked = false;
+          emoji.textContent = '🌞';
+        }
+      }
+
+      // Verifica o tema salvo no localStorage
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        applyTheme(savedTheme === 'dark');
+      } else {
+        // Se não há tema salvo, verifica a preferência do sistema
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        applyTheme(prefersDark);
+      }
+
+      // Event listener para mudança do toggle
+      toggle.addEventListener('change', function() {
+        const isDark = this.checked;
+        applyTheme(isDark);
         
-      </div>
-    </section>
+        // Salva a preferência no localStorage
+        try {
+          localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        } catch (error) {
+          console.warn('Não foi possível salvar a preferência de tema:', error);
+        }
+      });
 
+      // Listener para mudanças na preferência do sistema
+      if (window.matchMedia) {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        mediaQuery.addEventListener('change', function(e) {
+          // Só aplica a preferência do sistema se não há preferência salva
+          if (!localStorage.getItem('theme')) {
+            applyTheme(e.matches);
+          }
+        });
+      }
 
-
-
-<script>
-  const toggle = document.getElementById('theme-toggle');
-  const body = document.body;
-  const emoji = document.querySelector('.emoji');
-
-  // Verifica tema salvo
-  if (localStorage.getItem('theme') === 'dark') {
-    body.classList.add('dark-mode');
-    toggle.checked = true;
-    emoji.textContent = '🌙';
-  }
-
-  toggle.addEventListener('change', () => {
-    const isDark = toggle.checked;
-    body.classList.toggle('dark-mode', isDark);
-    emoji.textContent = isDark ? '🌙' : '🌞';
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  });
-</script>
-
+      // Adiciona funcionalidade aos botões (opcional)
+      const buttons = document.querySelectorAll('.cta-button');
+      buttons.forEach(button => {
+        button.addEventListener('click', function() {
+          const buttonText = this.textContent.trim();
+          console.log(`Botão clicado: ${buttonText}`);
+          
+          // Aqui você pode adicionar a lógica específica para cada botão
+          switch(buttonText) {
+            case 'saber mais':
+              // Lógica para "saber mais"
+              alert('Redirecionando para mais informações sobre a escola...');
+              break;
+            case 'ver calendário':
+              // Lógica para "ver calendário"
+              alert('Abrindo calendário de eventos...');
+              break;
+            case 'ver notícias':
+              // Lógica para "ver notícias"
+              alert('Carregando últimas notícias...');
+              break;
+            default:
+              alert(`Funcionalidade "${buttonText}" em desenvolvimento.`);
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
