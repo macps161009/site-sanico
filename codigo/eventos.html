@@ -1,346 +1,407 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eventos/Calendário Escolar</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #ffffff;
-      color: #000;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      overflow-x: hidden;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Eventos — E. E. Sanico Teles</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    body.tema-escuro {
-      background-color: #000;
-      color: #fff;
-    }
+<style>
+:root {
+  --bg-color: #f0f0f0;
+  --text-color: #232323;
+  --card-bg: #ffffff;
+  --card-border: #dcdcdc;
+  --card-shadow: rgba(0, 0, 0, 0.15);
+  --primary: #0d6efd;
+  --modal-bg: #ffffff;
+  --table-header: #e7ebff;
+  --table-text: #21304c;
+}
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #007bff;
-      color: white;
-      padding: 10px 20px;
-      border-bottom: 1px solid #ccc;
-      position: relative;
-      z-index: 10;
-    }
+body.dark-mode {
+  --bg-color: #0f0f0f;
+  --text-color: #e7e7e7;
+  --card-bg: #1a1a1a;
+  --card-border: #333;
+  --card-shadow: rgba(0, 0, 0, 0.6);
+  --primary: #3b82f6;
+  --modal-bg: #181818;
+  --table-header: #1e3a8a;
+  --table-text: #ffffff;
+}
 
-    header h1 {
-      font-size: 18px;
-      margin: 0;
-      text-align: center;
-      flex: 1;
-    }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-    .icon {
-      font-size: 22px;
-      cursor: pointer;
-      padding: 10px;
-      color: white;
-    }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color .25s, color .25s;
+  min-height: 100vh;
+}
 
-    main {
-      padding: 30px;
-    }
+/* TOPO */
+.topo {
+  background-color: rgb(19, 79, 189);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 18px;
+  position: relative;
+}
 
-    h3 {
-      text-align: left;
-      margin-left: 5%;
-    }
+/* LOGO E TÍTULO */
+.tit-escola {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-    .calendario {
-      border: 1px solid #ccc;
-      padding: 20px;
-      text-align: left;
-      width: 80%;
-      margin: 20px auto;
-      border-radius: 8px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-      background-color: #fff;
-      color: #000;
-      transition: background 0.3s, color 0.3s;
-    }
+.logo {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.9);
+  animation: brilhoLogo 3s infinite alternate;
+}
 
-    body.tema-escuro .calendario {
-      background-color: #111;
-      color: #fff;
-      border-color: #444;
-    }
+@keyframes brilhoLogo {
+  from { box-shadow: 0 0 12px rgba(255, 255, 255, 0.6); }
+  to { box-shadow: 0 0 24px rgba(255, 255, 255, 1); }
+}
 
-    .calendario-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+.nome-escola {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg,#fff,#dbe6ff,#fff);
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: brilhoTexto 2s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.8));
+}
 
-    .calendario-header button {
-      background-color: #f5f5f5;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      padding: 6px 12px;
-      cursor: pointer;
-    }
+.titulo-central {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+  font-weight: bold;
+  background: linear-gradient(90deg,#fff,#cddcff,#fff);
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: brilhoTexto 2s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.8));
+}
 
-    p {
-      margin-left: 5px;
-      font-weight: bold;
-    }
+@keyframes brilhoTexto {
+  to { background-position: 200% center; }
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
+/* HAMBURGUER */
+.hamburguer {
+  font-size: 28px;
+  cursor: pointer;
+  color: #fff;
+}
 
-    th, td {
-      border: 1px solid #ccc;
-      text-align: center;
-      padding: 10px;
-      font-size: 15px;
-    }
+/* MODO E ÍCONE */
+.modo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-direction: column;
+}
 
-    th {
-      background-color: #f2f2f2;
-      text-transform: lowercase;
-    }
+/* SWITCH DE TEMA */
+.theme-switch { position: relative; width: 48px; height: 26px; display: inline-block; }
+.theme-switch input { opacity: 0; width: 0; height: 0; }
 
-    tr:hover {
-      background-color: #f9f9f9;
-    }
+.slider {
+  position: absolute; inset: 0; border-radius: 999px;
+  background: #ebebeb; border: 1px solid rgba(0,0,0,0.12);
+  display: flex; align-items: center; padding: 4px;
+  justify-content: flex-start; transition: background .22s, justify-content .22s;
+}
 
-    .botao-imagem {
-      margin-top: 15px;
-      display: flex;
-      justify-content: flex-end;
-    }
+.slider .emoji {
+  width: 18px; height: 18px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: #232323; color: #fff; font-size: 12px; transition: background .22s;
+}
 
-    .botao-imagem button {
-      background-color: #f5f5f5;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      padding: 6px 12px;
-      cursor: pointer;
-    }
+input:checked + .slider { justify-content: flex-end; background: #333; }
+input:checked + .slider .emoji { background: #f3f3f3; color: #000; }
 
-    footer {
-      text-align: center;
-      font-size: 12px;
-      color: #555;
-      margin: 40px 0 20px 0;
-    }
+/* MENU LATERAL */
+.menu-lateral {
+  position: fixed;
+  left: -250px;
+  top: 0;
+  width: 250px;
+  height: 100%;
+  background: #222;
+  color: white;
+  transition: left .28s;
+  padding-top: 60px;
+  z-index: 40;
+}
+.menu-lateral.ativo { left: 0; }
+.menu-lateral a { display: block; padding: 14px 20px; color: #fff; text-decoration: none; }
+.menu-lateral a:hover { background: #444; }
 
-    /* ===== MENU LATERAL ===== */
-    .menu-lateral {
-      position: fixed;
-      top: 0;
-      left: -270px;
-      width: 270px;
-      height: 100%;
-      background-color: #007bff;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
-      transition: left 0.3s ease;
-      z-index: 20;
-    }
+.overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: none; z-index: 30;
+}
+.overlay.ativo { display: block; }
 
-    .menu-lateral a {
-      color: white;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 17px;
-      transition: transform 0.2s;
-    }
+/* BALÃO DE EVENTOS */
+.eventos-container {
+  max-width: 950px;
+  margin: 60px auto;
+  background: var(--card-bg);
+  box-shadow: 0 8px 22px 0 var(--card-shadow);
+  border-radius: 22px;
+  padding: 36px;
+  border: 1px solid var(--card-border);
+}
 
-    .menu-lateral a:hover {
-      transform: translateX(5px);
-    }
+/* TÍTULO */
+.eventos-titulo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 25px;
+  text-align: center;
+}
 
-    .menu-lateral.ativo {
-      left: 0;
-    }
+/* CABEÇALHO DO CALENDÁRIO */
+.calendario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
 
-    /* Fundo escuro ao abrir menu */
-    .overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 15;
-    }
+.calendario-header button {
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background .25s;
+}
+.calendario-header button:hover { background-color: #3453c5; }
 
-    .overlay.ativo {
-      display: block;
-    }
+/* SUBTÍTULO */
+.subtitulo-mes {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  color: var(--text-color);
+  font-weight: bold;
+  text-align: center;
+}
 
-    /* Botão tema */
-    .btn-tema {
-      background-color: white;
-      color: #007bff;
-      border: none;
-      border-radius: 5px;
-      padding: 6px 12px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+/* TABELA */
+.tabela-eventos {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--modal-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.tabela-eventos th {
+  background-color: var(--table-header);
+  text-align: left;
+  padding: 14px;
+  color: var(--table-text);
+  font-weight: bold;
+  border-bottom: 2px solid #d2d8ff;
+}
+.tabela-eventos td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+.tabela-eventos tr:hover {
+  background-color: rgba(0,191,255,0.08);
+  transition: background 0.2s;
+}
 
-    body.tema-escuro .btn-tema {
-      background-color: #222;
-      color: white;
-      border: 1px solid #555;
-    }
-  </style>
+/* MODAL */
+.modal-meses {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  background-color: var(--modal-bg);
+  border-radius: 16px;
+  box-shadow: 0 6px 24px var(--card-shadow);
+  padding: 25px 30px;
+  z-index: 100;
+  width: 320px; max-width: 90%;
+  opacity: 0;
+  transition: all .25s ease;
+  display: none;
+}
+.modal-meses.ativo {
+  display: block;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+.modal-meses h3 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+.meses-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.meses-grid button {
+  background: var(--primary);
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background .2s;
+}
+.meses-grid button:hover { background: #3453c5; }
+</style>
 </head>
 <body>
-  <header>
-    <div class="icon" id="btn-menu">☰</div>
-    <h1>Eventos/Calendário Escolar</h1>
-    <div class="icon" id="btn-tema">🌗</div>
-  </header>
-
-  <!-- MENU LATERAL -->
-  <div id="menu" class="menu-lateral">
-   <a href="#">Inicio</a>
-
-                <a href="#">
-                <svg width="28" height="26" viewBox="0 0 28 26" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M27.8,2.9C27,2.2,24.5,0,20.8,0c0,0-5.2,0.4-6.8,3.4C12.4,0.4,7.2,0,7.2,0
-                    C3.5,0,1,2.2,0.2,2.9C0.1,3.1,0,3.3,0,3.5v17.3c0,0.2,0.2,0.4,0.4,0.4c0.1,0,0.2,0,0.3-0.1c2.7-2,5.8-2.1,6.5-2.1c0.1,0,0.1,0,0.1,0
-                    c3.1,0,5.1,1.7,6.1,3l0.5,0.7l0.5-0.7c1-1.3,3-3,6.1-3c0,0,0,0,0.1,0c0.7,0,3.9,0.1,6.5,2.1c0.1,0.1,0.2,0.1,0.3,0.1
-                    c0.2,0,0.4-0.2,0.4-0.4V3.5C28,3.3,27.9,3.1,27.8,2.9z M13.5,5.5v14.9c-1.3-1.3-3.2-2.4-6.1-2.4c0,0-0.1,0-0.2,0
-                    c-0.9,0-3.6,0.1-6.3,1.7V3.6C2.9,1.9,4.9,1,7.1,1c0.5,0,6,0.6,6.4,4.2C13.5,5.2,13.5,5.4,13.5,5.5z M27,19.7
-                    c-2.6-1.6-5.4-1.7-6.3-1.7c-0.1,0-0.1,0-0.2,0c-2.9,0-4.8,1.2-6.1,2.4V5.5c0-0.1,0-0.3,0-0.4C14.9,1.6,20.4,1,20.9,1
-                    c2.2,0,4.3,0.9,6.2,2.6V19.7z"/>
-                 </svg>
-             A escola
-
-                </a>
-
-                <a href="#">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                     <path d="M9,18c0,1.5,1.2,2.5,3,2.5s3-1,3-2.5c0-1.1-0.7-2-1.7-2.2v-0.1
-                        c0.9-0.2,1.4-1,1.4-1.9c0-1.3-1.1-2.3-2.7-2.3c-1.6,0-2.7,1-2.7,2.3c0,0.9,0.5,1.7,1.4,1.9v0.1C9.7,16,9,16.9,9,18z M10.4,13.9
-                        c0-0.9,0.7-1.5,1.6-1.5s1.6,0.6,1.6,1.5c0,0.9-0.7,1.5-1.6,1.5S10.4,14.8,10.4,13.9z M12,16.3c1.2,0,2,0.7,2,1.7s-0.8,1.7-2,1.7
-                        c-1.2,0-2-0.7-2-1.7S10.8,16.3,12,16.3z M3,5V1c0-0.6,0.4-1,1-1s1,0.4,1,1v4c0,0.6-0.4,1-1,1S3,5.6,3,5z M19,5V1c0-0.6,0.4-1,1-1
-                        s1,0.4,1,1v4c0,0.6-0.4,1-1,1S19,5.6,19,5z M22,2v3c0,1.1-0.9,2-2,2s-2-0.9-2-2V2H6v3c0,1.1-0.9,2-2,2S2,6.1,2,5V2H0v22h24V2H22z
-                        M23,23H1V8h22V23z"/>
-                  </svg>
-
-             Eventos
-                </a>
-              <a href="#">
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M8.5,22h5c0,1.4-1.1,2.5-2.5,2.5S8.5,23.4,8.5,22z M22,20v1H0v-1l2.2-2.2
-                    C2.9,17.1,3.1,16,3.3,15c0.3-2.3,0.3-4.7,0.3-7c0-3.3,2.8-6,6.4-6.4c0-0.2,0-0.4,0-0.6c0-0.6,0.4-1,1-1c0.6,0,1,0.4,1,1
-                    c0,0.2,0,0.4,0,0.6C15.7,2,18.5,4.7,18.5,8c0,2.3,0,4.7,0.3,7c0.1,1,0.3,2,1.1,2.8L22,20z M20.7,20.1l-1.6-1.6
-                    c-0.9-0.9-1.2-2.2-1.4-3.3C17.5,12.9,17.5,8,17.5,8c0-2.8-2.4-5.1-5.6-5.5l-0.8-0.1l-1,0.1C6.9,2.9,4.5,5.2,4.5,8v0.1
-                    c0,2.3,0,4.7-0.3,7.1c-0.1,1.1-0.4,2.4-1.3,3.3l-1.6,1.6H20.7z"/>
-                </svg>
-
-                   Nóticias
-              </a>
-              <a href="#">
-                <svg width="34" height="24" viewBox="0 0 34 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M34.5,6.1L17.2,0L0,6.1l8,3c-1,1.8-2.3,4.1-2.7,5.8c0.6-0.1,1.1,0,1.7,0
-                    c0.6,0,1.2,0,1.8,0.1v2.3C8.3,17.9,8,19,8,19.5V22h2.5v-2.5c0-0.5-0.3-1.6-0.8-2.2v-2.1c2.9,0.5,5.5,1.8,7.5,3.8
-                    c2.6-2.6,6.2-4.2,10.2-4.2c0.6,0,1.3,0,1.9,0.1c-0.4-2-1.7-4.3-2.7-5.9L34.5,6.1z M17.2,1l14.5,5.1l-14.5,5.5l-6.2-2.3l5.2-2.2
-                    c0.3,0.2,0.6,0.4,1,0.4c0.7,0,1.3-0.6,1.3-1.2S17.9,5,17.2,5c-0.7,0-1.3,0.5-1.3,1.2L9.7,8.8l-7-2.7L17.2,1z M7,14.1
-                    c-0.2,0-0.3,0-0.5,0c0.5-1.1,1.2-2.6,2.2-4.4v4.5C8.2,14.1,7.6,14.1,7,14.1z M28.1,14.1c-0.2,0-0.4,0-0.6,0c-3.9,0-7.6,1.3-10.2,3.7
-                    c-2.1-1.8-4.6-3-7.5-3.4V9.8l0.1,0l7.4,2.8l8.6-3.3l-0.1,0C26.5,10.6,27.5,12.4,28.1,14.1z"/>
-                </svg>
-
-
-                Areás
-
-            </a>
-
-            <a href="#">
-                <svg width="26" height="27" viewBox="0 0 26 27" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20.9,4c-2.1-2.6-5.6-4-8.9-4C5.4,0,0,5.4,0,12s5.4,12,12,12
-                    c2.6,0,5-0.8,7-2.3l-0.6-0.8c-1.8,1.3-4,2.1-6.4,2.1C5.9,23,1,18.1,1,12S5.9,1,12,1c2.6,0,5.2,1,7.2,2.7c2.1,1.8,2.8,4.5,2.7,7.2
-                    c0,1.5-0.2,3.2-1.3,4.4c-1.2,1.3-3.5,1.8-4.4,1c-1.4-1.4-0.2-7,0.4-8.9l-1-0.3c-0.1,0.3-0.3,1.1-0.5,2.3c-0.1-0.2-0.2-0.4-0.3-0.6
-                    c-0.6-1.2-1.7-2-2.8-2.1c-0.2,0-0.3,0-0.5,0c-2.2,0-4.1,2-4.5,4.8c-0.4,3,1.1,5.6,3.4,6c0.2,0,0.3,0,0.5,0c1.5,0,3-1,3.8-2.6
-                    c0.1,0.9,0.3,1.7,0.8,2.2c1.1,1.1,4,1,5.9-1c1.5-1.5,1.7-3.7,1.6-5.7C22.8,8.1,22.3,5.8,20.9,4z M14.4,12.4
-                    c-0.3,2.2-1.9,3.9-3.5,3.9c-0.1,0-0.2,0-0.4,0c-1.8-0.3-2.9-2.4-2.6-4.8c0.3-2.2,1.9-3.9,3.5-3.9c0.1,0,0.2,0,0.4,0
-                    C13.6,7.8,14.7,10,14.4,12.4z"/>
-                </svg>
-
-                Contato
-
-            </a>
-
+<!-- TOPO -->
+<div class="topo">
+  <div class="tit-escola">
+    <div class="hamburguer" onclick="abrirMenu()">☰</div>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoCakRBO6pZxb-xrHIZAI4QZS_YTVVM6at-g&s" alt="Logo da Escola" class="logo">
+    <span class="nome-escola">E. E. Sanico Teles</span>
   </div>
+  <div class="titulo-central">Eventos</div>
+  <div class="modo">
+    <i class="fa-regular fa-user" style="font-size:22px;color:#fff"></i>
+    <label class="theme-switch" title="Alternar tema">
+      <input type="checkbox" id="theme-toggle" />
+      <span class="slider"><span class="emoji" id="emojiToggle">🌞</span></span>
+    </label>
+  </div>
+</div>
 
-  <!-- FUNDO ESCURO QUANDO O MENU ABRIR -->
-  <div id="overlay" class="overlay"></div>
+<!-- MENU -->
+<div id="menu" class="menu-lateral">
+  <a href="index.html">Início</a>
+  <a href="historia.html">A Escola</a>
+  <a href="eventos.html">Eventos</a>
+  <a href="noticias.html">Notícias</a>
+  <a href="areas.html">Áreas</a>
+  <a href="contato.html">Contato</a>
+</div>
+<div id="overlay" class="overlay" onclick="fecharMenu();fecharModalMeses()"></div>
 
-  <main>
-    <h3>Próximos Eventos:</h3>
+<!-- CONTEÚDO -->
+<div class="eventos-container">
+  <div class="eventos-titulo">Eventos da Escola</div>
+  <div class="calendario-header">
+    <h4 style="font-size:1.1rem;color:var(--text-color)">Selecione o mês</h4>
+    <button onclick="abrirModalMeses()">Escolher mês</button>
+  </div>
+  <div id="subtituloMes" class="subtitulo-mes"></div>
+  <table class="tabela-eventos">
+    <thead>
+      <tr><th>Data</th><th>Evento</th><th>Horário</th></tr>
+    </thead>
+    <tbody id="eventos-lista"></tbody>
+  </table>
+</div>
 
-    <section class="calendario">
-      <div class="calendario-header">
-        <h4>📅 Calendário</h4>
-        <button>Escolha o mês</button>
-      </div>
+<!-- MODAL -->
+<div id="modalMeses" class="modal-meses">
+  <h3>Escolha um mês</h3>
+  <div class="meses-grid">
+    <button onclick="selecionarMes('Janeiro')">Jan</button>
+    <button onclick="selecionarMes('Fevereiro')">Fev</button>
+    <button onclick="selecionarMes('Março')">Mar</button>
+    <button onclick="selecionarMes('Abril')">Abr</button>
+    <button onclick="selecionarMes('Maio')">Mai</button>
+    <button onclick="selecionarMes('Junho')">Jun</button>
+    <button onclick="selecionarMes('Julho')">Jul</button>
+    <button onclick="selecionarMes('Agosto')">Ago</button>
+    <button onclick="selecionarMes('Setembro')">Set</button>
+    <button onclick="selecionarMes('Outubro')">Out</button>
+    <button onclick="selecionarMes('Novembro')">Nov</button>
+    <button onclick="selecionarMes('Dezembro')">Dez</button>
+  </div>
+</div>
 
-      <p>Outubro</p>
+<script>
+function abrirMenu(){menu.classList.add('ativo');overlay.classList.add('ativo');}
+function fecharMenu(){menu.classList.remove('ativo');overlay.classList.remove('ativo');}
+const modalMeses=document.getElementById("modalMeses");
+function abrirModalMeses(){modalMeses.classList.add("ativo");overlay.classList.add('ativo');}
+function fecharModalMeses(){modalMeses.classList.remove("ativo");overlay.classList.remove('ativo');}
 
-      <table>
-        <tr>
-          <th>Data</th>
-          <th>Assunto</th>
-          <th>Hora</th>
-        </tr>
-        <tr><td></td><td></td><td></td></tr>
-        <tr><td></td><td></td><td></td></tr>
-        <tr><td></td><td></td><td></td></tr>
-      </table>
+const eventos={
+  Janeiro:[{data:"10/01",nome:"Volta às Aulas",hora:"07:30 - 12:00"}],
+  Fevereiro:[{data:"10/02",nome:"Festa de Carnaval",hora:"09:00 - 12:00"}],
+  Março:[{data:"08/03",nome:"Dia da Mulher",hora:"Manhã"}],
+  Novembro:[
+    {data:"15/11",nome:"Desfile da Independência",hora:"08:00 - 12:00"},
+    {data:"20/11",nome:"Dia da Consciência Negra",hora:"Durante o dia"}
+  ],
+  Dezembro:[{data:"05/12",nome:"Feira de Ciências",hora:"14:00 - 17:00"}]
+};
 
-      <div class="botao-imagem">
-        <button>Veja imagens do evento</button>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    © 2025 Escola Modelo do Saber
-  </footer>
-
-  <script>
-    const menu = document.getElementById("menu");
-    const overlay = document.getElementById("overlay");
-    const btnMenu = document.getElementById("btn-menu");
-    const btnTema = document.getElementById("btn-tema");
-
-    // Abre/fecha o menu
-    btnMenu.addEventListener("click", () => {
-      menu.classList.toggle("ativo");
-      overlay.classList.toggle("ativo");
+function selecionarMes(mes){
+  fecharModalMeses();
+  const lista=document.getElementById("eventos-lista");
+  const subtitulo=document.getElementById("subtituloMes");
+  lista.innerHTML="";
+  subtitulo.textContent="Eventos de "+mes;
+  if(eventos[mes]){
+    eventos[mes].forEach(ev=>{
+      const row=document.createElement("tr");
+      row.innerHTML=`<td>${ev.data}</td><td>${ev.nome}</td><td>${ev.hora}</td>`;
+      lista.appendChild(row);
     });
+  } else {
+    const row=document.createElement("tr");
+    row.innerHTML=`<td colspan='3'>Nenhum evento neste mês.</td>`;
+    lista.appendChild(row);
+  }
+}
 
-    // Fecha ao clicar fora (no overlay)
-    overlay.addEventListener("click", () => {
-      menu.classList.remove("ativo");
-      overlay.classList.remove("ativo");
-    });
-
-    // Alternar tema claro/escuro
-    btnTema.addEventListener("click", () => {
-      document.body.classList.toggle("tema-escuro");
-    });
-  </script>
+/* TEMA */
+const toggle=document.getElementById('theme-toggle');
+const emoji=document.getElementById('emojiToggle');
+function applyTheme(isDark){
+  document.body.classList.toggle('dark-mode',isDark);
+  emoji.textContent=isDark?"🌙":"🌞";
+  toggle.checked=isDark;
+}
+toggle.addEventListener('change',()=>{
+  applyTheme(toggle.checked);
+  localStorage.setItem('theme',toggle.checked?'dark':'light');
+});
+(function init(){
+  const saved=localStorage.getItem('theme');
+  applyTheme(saved==="dark");
+  selecionarMes("Novembro");
+})();
+</script>
 </body>
 </html>
