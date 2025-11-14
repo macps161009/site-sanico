@@ -13,24 +13,31 @@
   --card-bg: #f9f9f9;
   --card-border: #dcdcdc;
   --card-shadow: rgba(0, 0, 0, 0.08);
-  --primary: #3c3c3c;         /* cinza escuro suave (em vez de preto) */
+  --primary: #3c3c3c;
   --modal-bg: #f9f9f9;
   --table-header: #e9e9e9;
   --table-text: #1f1f1f;
-  --button-hover: #2f2f2f;     /* hover um pouco mais forte */
+  --button-hover: #2f2f2f;
+
+  --topo-bg: rgb(19, 79, 189);
+  --topo-shadow: rgba(0,153,255,0.4);
+
+  /* altura do rodapé utilizada no cálculo do wrapper */
+  --footer-h: 64px;
 }
 
+/* modo escuro vars */
 body.dark-mode {
   --bg-color: #0d0d0d;
   --text-color: #d9d9d9;
   --card-bg: #151515;
   --card-border: #2b2b2b;
   --card-shadow: rgba(0, 0, 0, 0.6);
-  --primary: #555;          /* cinza claro, não branco */
+  --primary: #555;
   --modal-bg: #191919;
   --table-header: #1e1e1e;
   --table-text: #e2e2e2;
-  --button-hover: #444;     /* leve escurecimento no hover */
+  --button-hover: #444;
 }
 
 /* Botão padrão */
@@ -44,11 +51,7 @@ button, .action-btn {
   cursor: pointer;
   transition: background-color 0.25s, color 0.25s;
 }
-
-button:hover, .action-btn:hover {
-  background-color: var(--button-hover);
-}
-
+button:hover, .action-btn:hover { background-color: var(--button-hover); }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -58,11 +61,25 @@ body {
   color: var(--text-color);
   transition: background-color .25s, color .25s;
   min-height: 100vh;
+  /* OBS: NÃO transformar body em flex — deixamos normal para não encolher sections */
+}
+
+/* wrapper que garante que o rodapé fique mais "em cima" quando o conteudo for curto */
+.page-wrapper {
+  min-height: calc(100vh - var(--footer-h));
+  display: flex;
+  flex-direction: column;
+}
+
+/* garante que o conteúdo natural não seja esticado nem encolhido */
+.conteudo {
+  flex: 0 0 auto;
+  padding-bottom: 12px; /* pequeno espaçamento antes do rodapé */
 }
 
 /* TOPO */
 .topo {
-  background-color: rgb(19, 79, 189);
+  background-color: var(--topo-bg);
   color: #fff;
   display: flex;
   justify-content: space-between;
@@ -73,118 +90,155 @@ body {
 }
 
 /* LOGO E TÍTULO */
-.tit-escola {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.tit-escola { 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
 }
-
-.logo {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 18px rgba(255, 255, 255, 1);
-  animation: brilhoLogo 2.5s infinite alternate;
+.logo { 
+  width: 45px; 
+  height: 45px; 
+  border-radius: 50%; 
+  object-fit: cover; 
+  box-shadow: 0 0 18px rgba(255,255,255,1); 
+  animation: brilhoLogo 2.5s infinite alternate; 
 }
-
-@keyframes brilhoLogo {
-  from { box-shadow: 0 0 10px rgba(255, 255, 255, 0.7); }
-  to { box-shadow: 0 0 24px rgba(255, 255, 255, 1); }
+@keyframes brilhoLogo { 
+  from { box-shadow: 0 0 10px rgba(255,255,255,0.7);} 
+  to { box-shadow: 0 0 24px rgba(255,255,255,1);} 
 }
 
 .nome-escola {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 18px; 
+  font-weight: bold; 
   letter-spacing: 0.5px;
   background: linear-gradient(90deg,#fff,#dbe6ff,#fff);
-  background-size: 200% auto;
+  background-size: 200% auto; 
   color: transparent;
-  background-clip: text;
+  background-clip: text; 
   -webkit-background-clip: text;
-  animation: brilhoTexto 2s linear infinite;
+  animation: brilhoTexto 2s linear infinite; 
   filter: drop-shadow(0 0 10px rgba(255,255,255,0.9));
 }
-
 .titulo-central {
-  position: absolute;
-  left: 50%;
+  position: absolute; 
+  left: 50%; 
   transform: translateX(-50%);
-  font-size: 20px;
+  font-size: 20px; 
   font-weight: bold;
   background: linear-gradient(90deg,#fff,#cddcff,#fff);
-  background-size: 200% auto;
+  background-size: 200% auto; 
   color: transparent;
-  background-clip: text;
+  background-clip: text; 
   -webkit-background-clip: text;
-  animation: brilhoTexto 2s linear infinite;
+  animation: brilhoTexto 2s linear infinite; 
   filter: drop-shadow(0 0 10px rgba(255,255,255,0.9));
 }
-
-@keyframes brilhoTexto {
-  to { background-position: 200% center; }
+@keyframes brilhoTexto { 
+  to { background-position: 200% center; } 
 }
 
 /* HAMBURGUER */
-.hamburguer {
-  font-size: 28px;
-  cursor: pointer;
-  color: #fff;
+.hamburguer { 
+  font-size: 28px; 
+  cursor: pointer; 
+  color: #fff; 
 }
 
-/* MODO E ÍCONE */
-.modo {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-direction: column;
+/* MODO */
+.modo { 
+  display: flex; 
+  align-items: center; 
+  gap: 14px; 
+  flex-direction: column; 
 }
 
-/* SWITCH DE TEMA */
-.theme-switch { position: relative; width: 48px; height: 26px; display: inline-block; }
-.theme-switch input { opacity: 0; width: 0; height: 0; }
-
+/* SWITCH */
+.theme-switch { 
+  position: relative; 
+  width: 48px; 
+  height: 26px; 
+  display: inline-block; 
+}
+.theme-switch input { 
+  opacity: 0; 
+  width: 0; 
+  height: 0; 
+}
 .slider {
-  position: absolute; inset: 0; border-radius: 999px;
-  background: #ebebeb; border: 1px solid rgba(0,0,0,0.12);
-  display: flex; align-items: center; padding: 4px;
-  justify-content: flex-start; transition: background .22s, justify-content .22s;
+  position: absolute; 
+  inset: 0; 
+  border-radius: 999px; 
+  background: #ebebeb; 
+  border: 1px solid rgba(0,0,0,0.12);
+  display: flex; 
+  align-items: center; 
+  padding: 4px; 
+  justify-content: flex-start; 
+  transition: background .22s, justify-content .22s; 
 }
-
-.slider .emoji {
-  width: 18px; height: 18px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  background: #232323; color: #fff; font-size: 12px; transition: background .22s;
+.slider .emoji { 
+  width: 18px; 
+  height: 18px; 
+  border-radius: 50%; 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  background:#232323; 
+  color:#fff; 
+  font-size:12px; 
+  transition: background .22s; 
 }
-
-input:checked + .slider { justify-content: flex-end; background: #333; }
-input:checked + .slider .emoji { background: #f3f3f3; color: #000; }
+input:checked + .slider {
+  justify-content: flex-end; 
+  background: #333; 
+}
+input:checked + .slider .emoji { 
+  background: #f3f3f3; 
+  color: #000; 
+}
 
 /* MENU LATERAL */
-.menu-lateral {
-  position: fixed;
-  left: -250px;
-  top: 0;
-  width: 250px;
-  height: 100%;
-  background: #222;
-  color: white;
-  transition: left .28s;
+.menu-lateral { 
+  position: fixed; 
+  left: -250px; 
+  top: 0; 
+  width: 250px; 
+  height: 100%; 
+  background: #222; 
+  color: white; 
+  transition: left .28s; 
   padding-top: 60px;
-  z-index: 40;
+  z-index: 40; 
 }
-.menu-lateral.ativo { left: 0; }
-.menu-lateral a { display: block; padding: 14px 20px; color: #fff; text-decoration: none; }
-.menu-lateral a:hover { background: #444; }
-
-.overlay {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  display: none; z-index: 30;
+.menu-lateral.ativo { 
+  left: 0; 
 }
-.overlay.ativo { display: block; }
+.menu-lateral a { 
+  display: block; 
+  padding: 14px 20px; 
+  color: #fff; 
+  text-decoration: none; 
+}
+.menu-lateral a:hover { 
+  background: #444; 
+}
 
-/* BALÃO DE EVENTOS — estilo idêntico ao .area-block */
+.overlay { 
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%; 
+  background: rgba(0,0,0,0.4); 
+  display: none; 
+  z-index: 30; 
+}
+.overlay.ativo { 
+  display: block;
+}
+
+/* EVENTOS */
 .eventos-container {
   max-width: 950px;
   margin: 60px auto;
@@ -195,134 +249,168 @@ input:checked + .slider .emoji { background: #f3f3f3; color: #000; }
   box-shadow: 0 8px 24px var(--card-shadow);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-.eventos-container:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+.eventos-container:hover { 
+  transform: translateY(-4px); 
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15); 
 }
 
-/* TÍTULO */
-.eventos-titulo {
-  font-size: 1.9rem;
-  font-weight: bold;
-  color: var(--text-color);
-  margin-bottom: 25px;
-  text-align: center;
-  text-shadow: 0 0 10px rgba(13,110,253,0.4);
+.eventos-titulo { 
+  font-size: 1.9rem; 
+  font-weight: bold; 
+  color: var(--text-color); 
+  margin-bottom: 25px; 
+  text-align:center; 
+  text-shadow: 0 0 10px rgba(13,110,253,0.4); 
 }
 
-/* CABEÇALHO DO CALENDÁRIO */
-.calendario-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
+.calendario-header { 
+  display:flex; 
+  justify-content:space-between; 
+  align-items:center; 
+  margin-bottom:15px; 
+}
+.calendario-header button { 
+  background-color: var(--primary); 
+  color:#fff;
+  border:none; 
+  border-radius:12px; 
+  padding:10px 18px; 
+  cursor:pointer; 
+  font-size:1rem; 
+  font-weight:500; 
+  box-shadow:0 4px 10px rgba(0,0,0,0.1); 
+  transition: all .25s; 
+}
+.calendario-header button:hover { 
+  background-color: var(--button-hover); 
+  transform: translateY(-2px); 
 }
 
-.calendario-header button {
-  background-color: var(--primary);
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  padding: 10px 18px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 500;
-  transition: all .25s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-.calendario-header button:hover {
-  background-color: var(--button-hover);
-  transform: translateY(-2px);
+.subtitulo-mes { 
+  font-size:1.25rem; 
+  margin-bottom:12px; 
+  color:var(--text-color); 
+  font-weight:bold; 
+  text-align:center; 
 }
 
-/* SUBTÍTULO */
-.subtitulo-mes {
-  font-size: 1.25rem;
-  margin-bottom: 12px;
-  color: var(--text-color);
-  font-weight: bold;
-  text-align: center;
-}
-
-/* TABELA */
 .tabela-eventos {
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--modal-bg);
-  border-radius: 14px;
-  overflow: hidden;
-  margin-top: 8px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  width:100%; 
+  border-collapse:collapse; 
+  background:var(--modal-bg); 
+  border-radius:14px; 
+  overflow:hidden; 
+  margin-top:8px; 
+  box-shadow:0 3px 10px rgba(0,0,0,0.08); 
 }
-.tabela-eventos th {
-  background-color: var(--table-header);
-  text-align: left;
-  padding: 14px;
-  color: var(--table-text);
-  font-weight: bold;
-  border-bottom: 2px solid #d2d8ff;
+.tabela-eventos th { 
+  background-color:var(--table-header); 
+  text-align:left; 
+  padding:14px; 
+  color:var(--table-text); 
+  font-weight:bold; 
+  border-bottom:2px solid #d2d8ff; 
 }
-.tabela-eventos td {
-  padding: 12px 14px;
-  border-bottom: 1px solid #ddd;
-  font-size: 0.95rem;
-}
-.tabela-eventos tr:hover {
-  background-color: rgba(0,191,255,0.08);
-  transition: background 0.2s;
+.tabela-eventos td { 
+  padding:12px 14px; 
+  border-bottom:1px solid #ddd; 
+  font-size:0.95rem; }
+.tabela-eventos tr:hover { 
+  background-color: rgba(0,191,255,0.08); 
+  transition: background .2s; 
 }
 
 /* MODAL */
 .modal-meses {
   position: fixed;
   top: 50%; left: 50%;
-  transform: translate(-50%, -50%) scale(0.9);
+  transform: translate(-50%,-50%) scale(0.9);
   background-color: var(--modal-bg);
   border-radius: 18px;
   box-shadow: 0 8px 26px var(--card-shadow);
   padding: 25px 30px;
   z-index: 100;
   width: 340px; max-width: 90%;
-  opacity: 0;
-  transition: all .25s ease;
-  display: none;
+  opacity: 0; transition: all .25s ease; display:none;
 }
-.modal-meses.ativo {
-  display: block;
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+.modal-meses.ativo { 
+  display:block; 
+  opacity:1; 
+  transform:translate(-50%,-50%) scale(1); 
 }
-.modal-meses h3 {
-  text-align: center;
-  margin-bottom: 18px;
-  color: var(--text-color);
-  font-weight: 600;
+.modal-meses h3 { 
+  text-align:center; 
+  margin-bottom:18px; 
+  color:var(--text-color); 
+  font-weight:600; 
 }
-.meses-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+.meses-grid { 
+  display:grid; 
+  grid-template-columns:repeat(3,1fr); 
+  gap:12px; 
 }
-.meses-grid button {
-  background: var(--primary);
-  border: none;
-  color: #fff;
-  border-radius: 10px;
-  padding: 10px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: all .2s;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+.meses-grid button { 
+  background:var(--primary); 
+  border:none; 
+  color:#fff; 
+  border-radius:10px; 
+  padding:10px; 
+  cursor:pointer; 
+  font-size:0.9rem; 
+  font-weight:500; 
+  box-shadow:0 4px 10px rgba(0,0,0,0.1); 
+  transition: all .2s; 
 }
-.meses-grid button:hover {
-  background: var(--button-hover);
-  transform: translateY(-2px);
+.meses-grid button:hover { 
+  background: var(--button-hover); 
+  transform: translateY(-2px); 
 }
 
+/* RODAPÉ */
+.rodape {
+  text-align: center;
+  padding: 12px 0;            /* mais compacto */
+  margin-top: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background: var(--topo-bg);
+  border-top: 2px solid var(--topo-shadow);
+  box-shadow: 0 0 25px var(--topo-shadow);
+}
+
+/* modo escuro rodape (mantém aparência) */
+body.dark-mode .rodape {
+  background: var(--topo-bg);
+  color: #ffffff;
+  border-top: 2px solid var(--topo-shadow);
+  box-shadow: 0 0 25px var(--topo-shadow);
+}
+
+/* ajuste responsivo mínimo */
+@media (max-width: 780px) {
+  .eventos-container { 
+    padding: 20px; 
+    margin: 36px 16px; 
+  }
+  .topo { 
+    padding: 10px; 
+  }
+  .titulo-central { 
+    position: relative; 
+    left: auto; 
+    transform: none; 
+    margin: 8px 0; 
+  }
+  .modo { 
+    flex-direction: row; 
+    gap: 10px; 
+  }
+}
 </style>
 </head>
 <body>
+
 <!-- TOPO -->
 <div class="topo">
   <div class="tit-escola">
@@ -343,28 +431,31 @@ input:checked + .slider .emoji { background: #f3f3f3; color: #000; }
 <div id="menu" class="menu-lateral">
   <a href="index.html">Início</a>
   <a href="historia.html">A Escola</a>
-  <a href="eventos.html">Eventos</a>
-  <a href="noticias.html">Notícias</a>
+  <a href="eventos.html">Eventos/Noticias</a>
   <a href="areas.html">Áreas</a>
   <a href="contato.html">Contato</a>
 </div>
 <div id="overlay" class="overlay" onclick="fecharMenu();fecharModalMeses()"></div>
 
-<!-- CONTEÚDO -->
-<div class="eventos-container">
-  <div class="eventos-titulo">Eventos da Escola</div>
-  <div class="calendario-header">
-    <h4 style="font-size:1.1rem;color:var(--text-color)">Selecione o mês</h4>
-    <button onclick="abrirModalMeses()">Escolher mês</button>
+<!-- WRAPPER: garante altura mínima para aproximar o rodapé -->
+<div class="page-wrapper">
+  <div class="conteudo">
+    <div class="eventos-container">
+      <div class="eventos-titulo">Eventos da Escola</div>
+      <div class="calendario-header">
+        <h4 style="font-size:1.1rem;color:var(--text-color)">Selecione o mês</h4>
+        <button onclick="abrirModalMeses()">Escolher mês</button>
+      </div>
+      <div id="subtituloMes" class="subtitulo-mes"></div>
+      <table class="tabela-eventos">
+        <thead>
+          <tr><th>Data</th><th>Evento</th><th>Horário</th></tr>
+        </thead>
+        <tbody id="eventos-lista"></tbody>
+      </table>
+    </div>
   </div>
-  <div id="subtituloMes" class="subtitulo-mes"></div>
-  <table class="tabela-eventos">
-    <thead>
-      <tr><th>Data</th><th>Evento</th><th>Horário</th></tr>
-    </thead>
-    <tbody id="eventos-lista"></tbody>
-  </table>
-</div>
+</div> <!-- /page-wrapper -->
 
 <!-- MODAL -->
 <div id="modalMeses" class="modal-meses">
@@ -385,12 +476,31 @@ input:checked + .slider .emoji { background: #f3f3f3; color: #000; }
   </div>
 </div>
 
+<footer class="rodape">
+  © 2025 Escola Estadual Sanico Teles
+</footer>
+
 <script>
-function abrirMenu(){menu.classList.add('ativo');overlay.classList.add('ativo');}
-function fecharMenu(){menu.classList.remove('ativo');overlay.classList.remove('ativo');}
-const modalMeses=document.getElementById("modalMeses");
-function abrirModalMeses(){modalMeses.classList.add("ativo");overlay.classList.add('ativo');}
-function fecharModalMeses(){modalMeses.classList.remove("ativo");overlay.classList.remove('ativo');}
+function abrirMenu(){
+  document.getElementById('menu').classList.add('ativo'); 
+  document.getElementById('overlay').classList.add('ativo'); 
+}
+
+function fecharMenu(){
+  document.getElementById('menu').classList.remove('ativo'); 
+  document.getElementById('overlay').classList.remove('ativo'); 
+}
+const modalMeses = document.getElementById("modalMeses");
+
+function abrirModalMeses(){ 
+  modalMeses.classList.add("ativo"); 
+  document.getElementById('overlay').classList.add('ativo'); 
+}
+
+function fecharModalMeses(){ 
+  modalMeses.classList.remove("ativo"); 
+  document.getElementById('overlay').classList.remove('ativo'); 
+}
 
 const eventos={
   Janeiro:[{data:"10/01",nome:"Volta às Aulas",hora:"07:30 - 12:00"}],
@@ -405,18 +515,18 @@ const eventos={
 
 function selecionarMes(mes){
   fecharModalMeses();
-  const lista=document.getElementById("eventos-lista");
-  const subtitulo=document.getElementById("subtituloMes");
+  const lista=document.getElementById('eventos-lista');
+  const subtitulo=document.getElementById('subtituloMes');
   lista.innerHTML="";
   subtitulo.textContent="Eventos de "+mes;
   if(eventos[mes]){
     eventos[mes].forEach(ev=>{
-      const row=document.createElement("tr");
+      const row=document.createElement('tr');
       row.innerHTML=`<td>${ev.data}</td><td>${ev.nome}</td><td>${ev.hora}</td>`;
       lista.appendChild(row);
     });
   } else {
-    const row=document.createElement("tr");
+    const row=document.createElement('tr');
     row.innerHTML=`<td colspan='3'>Nenhum evento neste mês.</td>`;
     lista.appendChild(row);
   }
@@ -427,13 +537,15 @@ const toggle=document.getElementById('theme-toggle');
 const emoji=document.getElementById('emojiToggle');
 function applyTheme(isDark){
   document.body.classList.toggle('dark-mode',isDark);
-  emoji.textContent=isDark?"🌙":"🌞";
-  toggle.checked=isDark;
+  if(emoji) emoji.textContent=isDark?"🌙":"🌞";
+  if(toggle) toggle.checked=isDark;
 }
-toggle.addEventListener('change',()=>{
-  applyTheme(toggle.checked);
-  localStorage.setItem('theme',toggle.checked?'dark':'light');
-});
+if(toggle){
+  toggle.addEventListener('change',()=>{
+    applyTheme(toggle.checked);
+    localStorage.setItem('theme',toggle.checked?'dark':'light');
+  });
+}
 (function init(){
   const saved=localStorage.getItem('theme');
   applyTheme(saved==="dark");
