@@ -179,11 +179,12 @@ input:checked + .slider .emoji { background: #f3f3f3; color: #000; }
 }
 
 .area-title {
-  font-size: 1.4rem;
+  font-size: 1.9rem;
   font-weight: bold;
   color: var(--text-color);
-  margin-bottom: 16px;
+  margin-bottom: 25px;
   text-align: center;
+  text-shadow: 0 0 10px rgba(13,110,253,0.4);
 }
 
 .area-actions {
@@ -233,6 +234,26 @@ input:checked + .slider .emoji { background: #f3f3f3; color: #000; }
   background-color: var(--button-hover);
   transform: scale(1.05);
 }
+.rodape {
+  text-align: center;
+  padding: 18px 0;
+  margin-top: 40px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  background: rgb(19, 79, 189); /* cor do topo */
+  border-top: 2px solid rgba(0,153,255,0.4);
+  box-shadow: 0 0 25px rgba(0,153,255,0.4);
+  backdrop-filter: blur(3px);
+}
+
+
+body.dark-mode .rodape {
+  background:  rgb(19, 79, 189);
+  color: #ffffff;
+  border-top: 2px solid rgba(0,153,255,0.4);
+  box-shadow: 0 0 25px rgba(0,153,255,0.4);
+}
 </style>
 </head>
 <body>
@@ -256,8 +277,7 @@ input:checked + .slider .emoji { background: #f3f3f3; color: #000; }
 <div id="menu" class="menu-lateral">
   <a href="index.html">Início</a>
   <a href="historia.html">A Escola</a>
-  <a href="eventos.html">Eventos</a>
-  <a href="noticias.html">Notícias</a>
+  <a href="eventos.html">Eventos/Noticias</a>
   <a href="areas.html">Áreas</a>
   <a href="contato.html">Contato</a>
 </div>
@@ -312,6 +332,10 @@ input:checked + .slider .emoji { background: #f3f3f3; color: #000; }
   </div>
 </div>
 
+
+  <footer class="rodape">
+    © 2025 Escola Estadual Sanico Teles
+  </footer>
 <script>
 function abrirMenu(){menu.classList.add('ativo');overlay.classList.add('ativo');}
 function fecharMenu(){menu.classList.remove('ativo');overlay.classList.remove('ativo');}
