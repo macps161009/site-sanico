@@ -32,7 +32,6 @@ body.dark-mode {
   --card-shadow: rgba(255,255,255,0.08);
   --title-glow: rgba(255,255,255,0.55);
   --btn-border: #fff;
- 
   --btn-hover-text: #000;
   --button-hover: #444;
 }
@@ -68,13 +67,21 @@ body {
   position: relative;
   box-shadow: 0 0 25px rgba(0,153,255,0.42);
   border-bottom: 2px solid rgba(255,255,255,0.15);
+  z-index: 20;
 }
 
-.tit-escola { display: flex; align-items: center; gap: 10px; }
-
+/* HAMBÚRGUER */
 .hamburguer {
   font-size: 27px;
   cursor: pointer;
+  margin-right: 10px;
+}
+
+/* LOGO + NOME */
+.tit-escola {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .logo {
@@ -91,9 +98,9 @@ body {
   to   { box-shadow: 0 0 28px white; }
 }
 
-.nome-escola,
-.titulo-central {
+.nome-escola {
   font-weight: bold;
+  font-size: 18px;
   background: linear-gradient(90deg, #fff, #dbe6ff, #fff);
   background-size: 200% auto;
   color: transparent;
@@ -102,22 +109,27 @@ body {
   filter: drop-shadow(0 0 15px #fff);
 }
 
-.nome-escola { font-size: 18px; }
-
+/* TÍTULO CENTRAL */
 .titulo-central {
-  font-size: 20px;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  font-weight: bold;
+  font-size: 20px;
+
+  background: linear-gradient(90deg, #fff, #dbe6ff, #fff);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  animation: brilhoTexto 2s linear infinite;
+  filter: drop-shadow(0 0 15px #fff);
 }
 
 @keyframes brilhoTexto {
   to { background-position: 200% center; }
 }
 
-/* ------------------------------------------
-   SWITCH DE TEMA
------------------------------------------- */
+/* SWITCH DE TEMA */
 .theme-switch {
   position: relative;
   width: 48px;
@@ -174,6 +186,7 @@ input:checked + .slider .emoji {
   color: white;
   transition: .3s;
   padding-top: 70px;
+  z-index: 30;
 }
 
 .menu-lateral.ativo { left: 0; }
@@ -195,6 +208,7 @@ input:checked + .slider .emoji {
   inset: 0;
   background: rgba(0,0,0,0.45);
   display: none;
+  z-index: 25;
 }
 .overlay.ativo { display: block; }
 
@@ -263,38 +277,37 @@ input:checked + .slider .emoji {
   min-width: 240px;
 }
 
-
 </style>
 
 </head>
 <body>
 
 <!-- ===========================================
-     TOPO
+     TOPO FINAL (AJUSTADO)
 =========================================== -->
+
+<!-- ===========================================
+     TOPO FINAL (AJUSTADO)
+=========================================== -->
+
 <div class="topo">
 
-  <div class="tit-escola">
-    <div class="hamburguer" onclick="abrirMenu()">☰</div>
+  <!-- ÍCONE + TÍTULO JUNTOS (ESQUERDA) -->
+  <div style="display:flex; align-items:center; gap:10px;">
+      <div class="hamburguer" onclick="abrirMenu()">☰</div>
 
-    <div id="menu" class="menu-lateral">
-      <a href="index.html">Início</a>
-      <a href="historia.html">A escola</a>
-      <a href="eventos.html">Eventos/Notícias</a>
-      <a href="areas.html">Áreas</a>
-      <a href="contato.html">Contato</a>
-    </div>
+      <div class="tit-escola">
+        <img class="logo"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoCakRBO6pZxb-xrHIZAI4QZS_YTVVM6at-g&s">
 
-    <div id="overlay" class="overlay" onclick="fecharMenu()"></div>
-
-    <img class="logo"
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoCakRBO6pZxb-xrHIZAI4QZS_YTVVM6at-g&s">
-
-    <span class="nome-escola">E. E. Sanico Teles</span>
+        <span class="nome-escola">E. E. Sanico Teles</span>
+      </div>
   </div>
 
-  <div class="titulo-central">Inicio</div>
+  <!-- TÍTULO CENTRAL (AGORA REALMENTE NO CENTRO) -->
+  <div class="titulo-central">Início</div>
 
+  <!-- SWITCH DE TEMA (LADO DIREITO) -->
   <label class="theme-switch">
     <input type="checkbox" id="theme-toggle">
     <span class="slider"><span class="emoji">🌞</span></span>
@@ -302,8 +315,20 @@ input:checked + .slider .emoji {
 
 </div>
 
+
+<!-- MENU LATERAL -->
+<div id="menu" class="menu-lateral">
+  <a href="index.html">Início</a>
+  <a href="historia.html">A escola</a>
+  <a href="eventos.html">Eventos/Notícias</a>
+  <a href="areas.html">Áreas</a>
+  <a href="contato.html">Contato</a>
+</div>
+
+<div id="overlay" class="overlay" onclick="fecharMenu()"></div>
+
 <!-- ===========================================
-     SECTIONS ORGANIZADOS
+     SECTIONS
 =========================================== -->
 
 <h1 class="tit">Apresentação da escola</h1>
