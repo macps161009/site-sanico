@@ -41,7 +41,15 @@
     box-shadow: 0 0 25px var(--topo-shadow);
     border-bottom:2px solid rgba(0,153,255,0.4);
   }
-  .tit-escola{display:flex;align-items:center;gap:12px}
+  .tit-escola{display:flex;align-items:center;gap:12px;
+    background: linear-gradient(90deg,#fff,#cddcff,#fff);
+    background-clip:text; -webkit-background-clip:text; color:transparent;
+    filter:drop-shadow(0 0 12px rgba(255,255,255,0.9));
+   
+  }
+
+  
+  
   .logo{width:45px;height:45px;border-radius:50%;object-fit:cover;box-shadow:0 0 20px rgba(255,255,255,0.9)}
   .nome-escola{font-weight:700;font-size:18px}
   .titulo-central{
@@ -183,7 +191,7 @@
     margin:18px auto;
     display:flex;
     gap:20px;
-    align-items:flex-start;
+    align-items:center;
     flex-wrap:wrap;
 }
 
