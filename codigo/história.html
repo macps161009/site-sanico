@@ -1,424 +1,375 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Site escola</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Escola Estadual Sanico Teles</title>
 
-  <style>
-    /* --------- VARIÁVEIS (mantive as suas e adicionei as do topo) --------- */
-    :root {
-      --bg-color: #ffffff;
-      --text-color: #232323;
-      --toggle-bg-light: #ebebeb;
-      --toggle-border: #232323;
-      --toggle-thumb: #232323;
-      --toggle-bg-dark: #232323;
-      --toggle-thumb-dark: #ebebeb;
-      --card-bg: #f7f7f7;
-      --card-border: #ddd;
-      --card-shadow: rgba(0, 0, 0, 0.08);
-
-      /* topo */
-      --topo-bg: rgb(19,79,189);
-      --topo-shadow: rgba(0,153,255,0.4);
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    body.dark-mode {
-      --bg-color: #121212;
-      --text-color: #f5f5f5;
-      --card-bg: #1a1a1a;
-      --card-border: rgba(255,255,255,0.05);
-      --card-shadow: rgba(255,255,255,0.06);
-    }
-
-    body.dark-mode section {
-      background-color: #1e1e1e;
-      box-shadow: 0 4px 10px rgba(255,255,255,0.1);
-    }
-
-    section {
-      background: var(--card-bg);
-      border-radius: 20px;
-      border: 1px solid var(--card-border);
-      box-shadow: 0 0 15px var(--card-shadow);
-      padding: 24px;
-      margin: 30px auto;
-      max-width: 900px;
-      transition: all .3s ease;
-    }
-    section:hover {
-      transform: scale(1.01);
-      box-shadow: 0 0 25px var(--card-shadow);
-    }
-
-    .subtopo {
-      display: flex;
-      justify-content: space-around;
-      align-items: flex-start;
-      padding: 20px;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    h2 {
-      color: var(--text-color);
-      transition: color 0.3s;
-    }
-
-    .img {
-      width: 500px;
-      max-width: 100%;
-      border-radius: 10px;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
-    }
-
-    .imagem-bloco {
-      text-align: center;
-    }
-
-    .loc {
-      justify-content: center;
-      display: flex;
-      align-items: center;
-      padding: 30px 0 60px;
-    }
-
-    /* ------------------ TOPO (seu topo exato) ------------------ */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: "Poppins", Arial, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      transition: background-color .25s, color .25s;
-      min-height: 100vh;
-    }
-
-    .topo {
-      background-color: var(--topo-bg);
-      color: #fff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 18px;
-      position: relative;
-      box-shadow: 0 0 25px var(--topo-shadow);
-      border-bottom: 2px solid rgba(0,153,255,0.4);
-    }
-
-    /* LOGO E TÍTULO */
-    .tit-escola {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo {
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 0 20px rgba(255,255,255,1);
-      animation: brilhoLogo 2.5s infinite alternate;
-    }
-
-    @keyframes brilhoLogo {
-      from { box-shadow: 0 0 10px rgba(255, 255, 255, 0.7); }
-      to { box-shadow: 0 0 24px rgba(255, 255, 255, 1); }
-    }
-
-    .nome-escola {
-      font-size: 18px;
-      font-weight: bold;
-      letter-spacing: 0.5px;
-      background: linear-gradient(90deg,#fff,#dbe6ff,#fff);
-      background-size: 200% auto;
-      color: transparent;
-      background-clip: text;
-      -webkit-background-clip: text;
-      animation: brilhoTexto 2s linear infinite;
-      filter: drop-shadow(0 0 15px rgba(255,255,255,1));
-    }
-
-    .titulo-central {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 20px;
-      font-weight: bold;
-      background: linear-gradient(90deg,#fff,#cddcff,#fff);
-      background-size: 200% auto;
-      color: transparent;
-      background-clip: text;
-      -webkit-background-clip: text;
-      animation: brilhoTexto 2s linear infinite;
-      filter: drop-shadow(0 0 15px rgba(255,255,255,1));
-      pointer-events: none; /* evita clique sobre o texto central */
-    }
-
-    @keyframes brilhoTexto { to { background-position: 200% center; } }
-
-    /* HAMBURGUER */
-    .hamburguer {
-      font-size: 28px;
-      cursor: pointer;
-      color: #fff;
-    }
-
-    /* MODO E ÍCONE */
-    .modo {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-direction: column;
-    }
-
-    /* SWITCH DE TEMA */
-    .theme-switch { position: relative; width: 48px; height: 26px; display: inline-block; }
-    .theme-switch input { opacity: 0; width: 0; height: 0; }
-
-    .slider {
-      position: absolute; inset: 0; border-radius: 999px;
-      background: #ebebeb; border: 1px solid rgba(0,0,0,0.12);
-      display: flex; align-items: center; padding: 4px;
-      justify-content: flex-start; transition: background .22s, justify-content .22s;
-    }
-
-    .slider .emoji {
-      width: 18px; height: 18px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      background: #232323; color: #fff; font-size: 12px; transition: background .22s;
-    }
-
-    input:checked + .slider { justify-content: flex-end; background: #333; }
-    input:checked + .slider .emoji { background: #f3f3f3; color: #000; }
-
-    /* ------------------ Menu lateral (mantive o seu original) ------------------ */
-    .menu-lateral {
-      position: fixed;
-      left: -250px;
-      top: 0;
-      width: 250px;
-      height: 100%;
-      background: #222;
-      color: white;
-      transition: left .28s;
-      padding-top: 60px;
-      z-index: 40;
-    }
-    .menu-lateral.ativo { left: 0; }
-    .menu-lateral a { display: block; padding: 14px 20px; color: #fff; text-decoration: none; }
-    .menu-lateral a:hover { background: #444; }
-
-    .overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      display: none; z-index: 30;
-    }
-    .overlay.ativo { display: block; }
-
-    /* pequenos ajustes responsivos */
-    @media (max-width: 780px) {
-      .subtopo { flex-direction: column; align-items: stretch; }
-      .titulo-central { position: relative; left: auto; transform: none; margin: 8px 0; }
-      .topo { padding: 10px; }
-      .modo { flex-direction: row; gap: 10px; }
-    }
-    h2 {
-      font-size: 1.9rem;
-      font-weight: bold;
-      color: var(--text-color);
-      margin-bottom: 25px;
-      text-align: center;
-      text-shadow: 0 0 10px rgba(13,110,253,0.4);
-    }
-    body.dark-mode h2 {
-    color: #ffffff;
-    text-shadow: 0 0 8px rgba(255,255,255,0.5);
+<style>
+  :root{
+    --topo-bg: rgb(19,79,189);
+    --topo-shadow: rgba(0,153,255,0.4);
+    --bg-color: #ffffff;
+    --text-color: #232323;
+    --card-bg: #f7f7f7;
+    --card-border: #ddd;
+    --card-shadow: rgba(0,0,0,0.12);
+    --accent: #0d6efd;
   }
 
-  .loc iframe {
-  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-  transition: box-shadow .3s ease, transform .3s ease;
+  /* Reset / base */
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family: "Poppins", Arial, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    transition: background .25s ease, color .25s ease;
+  }
+
+  /* TOPO */
+  .topo{
+    background-color: var(--topo-bg);
+    color: #fff;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 18px;
+    position:relative;
+    box-shadow: 0 0 25px var(--topo-shadow);
+    border-bottom:2px solid rgba(0,153,255,0.4);
+  }
+  .tit-escola{display:flex;align-items:center;gap:12px}
+  .logo{width:45px;height:45px;border-radius:50%;object-fit:cover;box-shadow:0 0 20px rgba(255,255,255,0.9)}
+  .nome-escola{font-weight:700;font-size:18px}
+  .titulo-central{
+    position:absolute; left:50%; transform:translateX(-50%);
+    font-size:20px; font-weight:700; pointer-events:none;
+    background: linear-gradient(90deg,#fff,#cddcff,#fff);
+    background-clip:text; -webkit-background-clip:text; color:transparent;
+    filter:drop-shadow(0 0 12px rgba(255,255,255,0.9));
+  }
+
+  .hamburguer{font-size:26px; cursor:pointer; color:#fff}
+
+  /* theme switch */
+  .modo{display:flex;align-items:center;gap:12px}
+  .theme-switch{position:relative;width:48px;height:26px;display:inline-block}
+  .theme-switch input{opacity:0;width:0;height:0}
+  .slider{position:absolute;inset:0;border-radius:999px;background:#ebebeb;border:1px solid rgba(0,0,0,0.12);display:flex;align-items:center;padding:4px;justify-content:flex-start;transition:all .22s}
+  .slider .emoji{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#232323;color:#fff;font-size:12px}
+  input:checked + .slider{justify-content:flex-end;background:#333}
+  input:checked + .slider .emoji{background:#f3f3f3;color:#000}
+
+  /* MENU LATERAL */
+  .menu-lateral{
+    position:fixed;left:-260px;top:0;width:260px;height:100%;background:#222;color:#fff;padding-top:72px;transition:left .28s;z-index:120;
+    box-shadow:4px 0 20px rgba(0,0,0,0.4);
+  }
+  .menu-lateral.ativo{left:0}
+  .menu-lateral a{display:block;padding:14px 20px;color:#fff;text-decoration:none}
+  .menu-lateral a:hover{background:#333}
+  .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);display:none;z-index:110}
+  .overlay.ativo{display:block}
+
+  /* MAIN / SECTIONS */
+  main{padding:28px 18px 60px}
+  h2{
+    font-size:1.8rem;
+    font-weight:700;
+    margin-bottom:18px;
+    text-align:center;
+    text-shadow:0 0 10px rgba(13,110,253,0.18);
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 8px 22px var(--card-shadow);
+    padding: 20px;
+    margin: 18px auto;
+    max-width: 1100px;
+    transition: transform .28s ease, box-shadow .28s ease;
+  }
+
+  /* linha com imagem + balão */
+  .subtopo {
+    display:flex;
+    gap:28px;
+    align-items:center; /* crucial: mantém imagem e balão na mesma altura */
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+
+  /* caixa de texto (balão) alinhado verticalmente ao centro da imagem */
+  .texto-box{
+    flex: 1 1 520px;
+    min-width:300px;
+    background: linear-gradient(180deg,#ffffff,#fbfbff);
+    padding:22px;
+    border-radius:12px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.06);
+    display:flex;
+    flex-direction:column;
+    justify-content:center; /* centraliza verticalmente para igual altura */
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .texto-box:hover{
+    transform: translateY(-6px);
+    box-shadow:0 18px 36px rgba(0,0,0,0.12);
+  }
+  .texto-box p{line-height:1.6;color:var(--text-color);margin-bottom:12px;font-size:16px}
+
+  .img-box{
+    flex: 0 0 360px;
+    max-width:360px;
+    height:260px; /* fixa altura para alinhar com a caixa de texto */
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 10px 24px rgba(0,0,0,0.08);
+    transition: transform .25s ease;
+  }
+  .img-box img{width:100%;height:100%;object-fit:cover;display:block}
+  .img-box:hover{transform: scale(1.02)}
+
+  /* reverse layout (imagem à esquerda) */
+  .reverse{flex-direction:row-reverse}
+
+  /* MAPA */
+  .loc{
+    max-width:1100px;
+    margin:30px auto;
+    border-radius:12px;
+    overflow:hidden;
+    transition: transform .25s ease, box-shadow .25s ease;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  }
+  .loc:hover{transform: translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,0.12)}
+  .loc iframe{width:100%;height:400px;border:0;display:block}
+
+  /* RODAPÉ */
+  .rodape{
+    text-align:center;padding:18px 0;margin-top:32px;color:#fff;background:var(--topo-bg);border-top:2px solid var(--topo-shadow);box-shadow:0 0 25px var(--topo-shadow)
+  }
+
+  /* Responsivo */
+  @media (max-width:980px){
+    .img-box{max-width:320px;height:220px}
+    .texto-box{flex-basis:1 1 420px}
+  }
+  @media (max-width:720px){
+    .subtopo{flex-direction:column;align-items:stretch}
+    .img-box{width:100%;height:240px;max-width:none}
+    .texto-box{width:100%}
+  }
+
+  /* DARK MODE */
+  body.dark-mode{
+    --bg-color: #0f1720;
+    --text-color: #e6eef7;
+    --card-bg: #0f1726;
+    --card-border: rgba(255,255,255,0.04);
+    --card-shadow: rgba(255,255,255,0.03);
+  }
+  body.dark-mode .topo{background:#0b2a66}
+  body.dark-mode .rodape{background:#0b2a66}
+
+  /* Caixa do mapa + endereço lado a lado */
+  .loc-container{
+    max-width:1100px;     /* igual aos sections */
+    margin:18px auto;
+    display:flex;
+    gap:20px;
+    align-items:flex-start;
+    flex-wrap:wrap;
 }
 
-/* Hover — aumenta um pouco a sombra */
-.loc iframe:hover {
-  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-  transform: scale(1.01);
+.loc{
+    flex:1;               /* deixa o mapa largo */
 }
 
-/* Modo escuro: sombra branca suave */
-body.dark-mode .loc iframe {
-  box-shadow: 0 4px 12px rgba(255,255,255,0.25);
-}
-
-body.dark-mode .loc iframe:hover {
-  box-shadow: 0 6px 18px rgba(255,255,255,0.35);
-  transform: scale(1.01);
-}
-.rodape {
-  text-align: center;
-  padding: 18px 0;
-  margin-top: 40px;
-  font-size: 15px;
-  font-weight: 500;
-  color: #fff;
-  background: var(--topo-bg);
-  border-top: 2px solid var(--topo-shadow);
-  box-shadow: 0 0 25px var(--topo-shadow);
-  backdrop-filter: blur(3px);
-}
-
-body.dark-mode .rodape {
-  background: var(--topo-bg);
-  color: #ffffff;
-  border-top: 2px solid var(--topo-shadow);
-  box-shadow: 0 0 25px var(--topo-shadow);
+.endereco-box{
+    width: 310px;
+    background: var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    padding:18px 20px;
+    box-shadow:0 10px 26px var(--card-shadow);
 }
 
 
 
+  .endereco-box h3{
+    margin-bottom:12px;
+    font-size:20px;
+    font-weight:700;
+    color:var(--text-color);
+    text-align:center;
+  }
 
-  </style>
+  .endereco-box p{
+    font-size:16px;
+    margin-bottom:6px;
+    color:var(--text-color);
+  }
+
+  /* Responsivo */
+  @media(max-width:720px){
+    .loc-container{
+      flex-direction:column;
+    }
+  }
+
+
+</style>
 </head>
 <body>
 
-  <!-- ****** TOPO INSERIDO (o que você mandou) ****** -->
-  <div class="topo">
+  <!-- TOPO -->
+  <div class="topo" role="banner">
     <div class="tit-escola">
-      <div class="hamburguer" onclick="abrirMenu()">☰</div>
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoCakRBO6pZxb-xrHIZAI4QZS_YTVVM6at-g&s" alt="Logo da Escola" class="logo">
-      <span class="nome-escola">E. E. Sanico Teles</span>
+      <div class="hamburguer" onclick="abrirMenu()" aria-label="Abrir menu" title="Abrir menu">☰</div>
+      <img class="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoCakRBO6pZxb-xrHIZAI4QZS_YTVVM6at-g&s" alt="Logo da escola">
+      <div class="nome-escola">E. E. Sanico Teles</div>
     </div>
 
-    <div class="titulo-central">A Escola</div>
+    <div class="titulo-central" aria-hidden="true">A Escola</div>
 
-    <div class="modo">
+    <div class="modo" aria-hidden="true">
       <label class="theme-switch" title="Alternar tema">
-        <input type="checkbox" id="theme-toggle" />
+        <input id="theme-toggle" type="checkbox">
         <span class="slider"><span class="emoji" id="emojiToggle">🌞</span></span>
       </label>
     </div>
   </div>
 
-  <!-- Menu lateral (mantive a estrutura do seu original, fora do topo) -->
-  <div id="menu" class="menu-lateral" aria-hidden="true">
-    <a href="index.html">Inicio</a>
-    <a href="história.html">A escola</a>
-    <a href="eventos.html">Evento/Noticias</a>
+  <!-- MENU LATERAL -->
+  <nav id="menu" class="menu-lateral" aria-hidden="true">
+    <a href="index.html">Início</a>
+    <a href="historia.html">A escola</a>
+    <a href="eventos.html">Eventos/Notícias</a>
     <a href="areas.html">Áreas</a>
     <a href="contato.html">Contato</a>
-  </div>
+  </nav>
   <div id="overlay" class="overlay" onclick="fecharMenu()"></div>
 
-  <!-- CONTEÚDO ORIGINAL -->
-  <div class="subtopo">
-    <div>
-      <h2>Época de fundação</h2>
-      <section><p>O grupo “Sinhá Moreira”, situado à Rua Olavo Marques n° 181 em Santa Rita do Sapucaí, foi instalado aos vinte dias do mês de fevereiro de 1964, criado pelo Decreto n° 6.889 de 21 de março de 1963.</p>
+  <main>
+   
 
-              <p>Mais tarde, pelo Decreto 7.734 de 24 de junho de 1964, o Grupo Escolar “Sinhá Moreira”, passou a denominar-se “Grupo Escolar Sanico Teles”.
-              </p>
-              <p>Atualmente tem nome de Escola Estadual “Sanico Teles”.</p>
-                  
-              <p>Em 1984 é autorizada a extensão de series (5ªsérie), 1985 fica autorizado o funcionamento da 6ª, 7ª e 8ª serie.</p>
-                  
-              <p>Em 2006, aprovado o Ensino Fundamental e o médio da EJA com o objetivo de ampliar o atendimento educacional a jovens e adultos que não cursaram na idade própria.</p>
-                  
-              <p>É uma das escolas integrantes do Projeto Incluir. Conta com sala de recursos para alunos com necessidades especiais. Participa também do Projeto Tempo Integral.</p>
+    <!-- HISTÓRIA DA ESCOLA (imagem left / texto right) -->
+    <section class="card" aria-labelledby="historia-title">
+      <h2 id="historia-title">História da Escola</h2>
 
-</section>
+      <div class="subtopo reverse">
+        <div class="img-box" role="img" aria-label="Foto antiga">
+          <img src="https://emporiodenoticias.com/wp-content/uploads/2024/08/Sanico6.jpeg" alt="Foto antiga da escola">
+        </div>
+
+        <div class="texto-box">
+          <p>A história da Escola Estadual Sanico Teles é marcada por dedicação, amor pela educação e transformação social. Seu início foi simples: o antigo “grupinho de lata” acolhia crianças da zona rural e bairros próximos, oferecendo refeições, acolhimento e aprendizado por meio de professoras que marcaram gerações.</p>
+
+          <p>Festivais, fanfarras, dramatizações e projetos culturais fortaleceram a identidade da escola. A diretora Dona Marlene Garcia e outras educadoras lutaram por um espaço maior e melhor até que o sonho se tornou realidade com a construção de um prédio amplo e moderno.</p>
+
+          <p>O legado dessas mulheres permanece vivo na comunidade: a escola segue sendo um espaço de inclusão, formação e esperança.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMO ELA ESTÁ HOJE -->
+    <section class="card" aria-labelledby="hoje-title">
+      <h2 id="hoje-title">Como ela está hoje</h2>
+
+      <div class="subtopo">
+
+        <div class="img-box" role="img" aria-label="Foto atual da escola">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT00g0prhEuZxj9cqMr35Is9ySt7-ZfR6H5TQ&s" alt="Foto atual da escola">
+        </div>
+
+        <div class="texto-box">
+          <p>Hoje, a Escola Estadual Sanico Teles vive uma fase de modernização e ampliação. O prédio atual conta com salas arejadas, boa iluminação, pátio organizado e espaços dedicados à convivência e aprendizagem, oferecendo um ambiente acolhedor e preparado para as necessidades dos estudantes.</p>
+
+          <p>A instituição também integra o Ensino Médio com cursos técnicos, como Técnico em Informática e Técnico em Energias Renováveis, ampliando oportunidades e preparando os alunos para o mercado de trabalho.</p>
+
+          <p>Com projetos pedagógicos, eventos culturais e participação ativa dos estudantes, a escola segue fortalecendo valores como inclusão, respeito, criatividade e cidadania.</p>
+        </div>
+
+        
+      </div>
+    </section>
+
+   <div class="loc-container">
+
+      <div class="loc" role="region" aria-label="Localização da escola">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3692.602253632754!2d-45.70160682458987!3d-22.25516511490836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cba241309dcc0d%3A0x6df0393df2f6dd32!2sEscola%20Estadual%20Sanico%20Teles!5e0!3m2!1spt-BR!2sbr!4v1762174436941!5m2!1spt-BR!2sbr"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen>
+        </iframe>
+      </div>
+    
+      <section class="endereco-box">
+        <h3>Endereço</h3>
+        <p>📍 **Escola Estadual Sanico Teles**</p>
+        <p>Rua Geraldina de Oliveira, 130 — Bairro Vista Alegre</p>
+        <p>Santa Rita do Sapucaí — MG</p>
+        <p>CEP: 37540-000</p>
+      </section>
+    
     </div>
 
-    <div class="imagem-bloco">
-      <h2>Imagem da escola</h2>
-      <img src="https://emporiodenoticias.com/wp-content/uploads/2024/08/Sanico6.jpeg" alt="Imagem da escola" class="img">
-    </div>
-  </div>
 
-  <div class="subtopo">
-    <div class="imagem-bloco">
-      <h2>imagem do fundador</h2>
-      <img src="https://emporiodenoticias.com/wp-content/uploads/2024/08/Sanico6.jpeg" alt="Imagem do fundador" class="img">
-    </div>
+  </main>
 
-    <div>
-      <h2>quem fundou a escola</h2>
-      <section><p>exemplo</p></section>
-    </div>
-  </div>
+  <footer class="rodape" role="contentinfo">© 2025 Escola Estadual Sanico Teles</footer>
 
-  <div class="subtopo">
-    <div>
-      <h2>Hoje em dia</h2>
-      <section><p>exemplo</p></section>
-    </div>
+<script>
+  // Tema + emoji + persistência
+  const toggle = document.getElementById('theme-toggle');
+  const body = document.body;
+  const emoji = document.getElementById('emojiToggle');
 
-    <div class="imagem-bloco">
-      <h2>Imagem da escola hoje em dia</h2>
-      <img src="https://emporiodenoticias.com/wp-content/uploads/2024/08/Sanico6.jpeg" alt="Imagem atual" class="img">
-    </div>
-  </div>
+  // Inicializa com valor salvo
+  if (localStorage.getItem('theme') === 'dark') {
+    body.classList.add('dark-mode');
+    if (toggle) toggle.checked = true;
+    if (emoji) emoji.textContent = '🌙';
+  }
 
-  <div class="loc">
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3692.602253632754!2d-45.70160682458987!3d-22.25516511490836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cba241309dcc0d%3A0x6df0393df2f6dd32!2sEscola%20Estadual%20Sanico%20Teles!5e0!3m2!1spt-BR!2sbr!4v1762174436941!5m2!1spt-BR!2sbr"
-      width="600" height="350" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-  </div>
+  if (toggle) {
+    toggle.addEventListener('change', () => {
+      const isDark = toggle.checked;
+      body.classList.toggle('dark-mode', isDark);
+      if (emoji) emoji.textContent = isDark ? '🌙' : '🌞';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+  }
 
-  <footer class="rodape">
-    © 2025 Escola Estadual Sanico Teles
-  </footer>
+  // Menu lateral open/close
+  function abrirMenu(){
+    document.getElementById('menu').classList.add('ativo');
+    document.getElementById('overlay').classList.add('ativo');
+    document.getElementById('menu').setAttribute('aria-hidden','false');
+  }
+  function fecharMenu(){
+    document.getElementById('menu').classList.remove('ativo');
+    document.getElementById('overlay').classList.remove('ativo');
+    document.getElementById('menu').setAttribute('aria-hidden','true');
+  }
 
-
-  <script>
-    // Tema e emoji
-    const toggle = document.getElementById('theme-toggle');
-    const body = document.body;
-    const emoji = document.getElementById('emojiToggle');
-
-    // Inicializa com valor salvo
-    if (localStorage.getItem('theme') === 'dark') {
-      body.classList.add('dark-mode');
-      if (toggle) toggle.checked = true;
-      if (emoji) emoji.textContent = '🌙';
+  // Fecha menu ao pressionar ESC
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape'){
+      fecharMenu();
     }
+  });
 
-    // Alterna tema
-    if (toggle) {
-      toggle.addEventListener('change', () => {
-        const isDark = toggle.checked;
-        body.classList.toggle('dark-mode', isDark);
-        if (emoji) emoji.textContent = isDark ? '🌙' : '🌞';
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      });
-    }
+  // Fecha menu se clicar fora (overlay já faz isso mas reforço)
+  document.getElementById('overlay').addEventListener('click', fecharMenu);
+</script>
 
-    // Abre/fecha menu lateral
-    function abrirMenu() {
-      document.getElementById('menu').classList.add('ativo');
-      document.getElementById('overlay').classList.add('ativo');
-      document.getElementById('menu').setAttribute('aria-hidden','false');
-    }
-
-    function fecharMenu() {
-      document.getElementById('menu').classList.remove('ativo');
-      document.getElementById('overlay').classList.remove('ativo');
-      document.getElementById('menu').setAttribute('aria-hidden','true');
-    }
-  </script>
 </body>
 </html>
