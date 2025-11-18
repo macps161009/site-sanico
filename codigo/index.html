@@ -104,7 +104,7 @@ body {
   background: linear-gradient(90deg, #fff, #dbe6ff, #fff);
   background-size: 200% auto;
   color: transparent;
-  -webkit-background-clip: text;
+  background-clip: text;
   animation: brilhoTexto 2s linear infinite;
   filter: drop-shadow(0 0 15px #fff);
 }
@@ -116,11 +116,10 @@ body {
   transform: translateX(-50%);
   font-weight: bold;
   font-size: 20px;
-
   background: linear-gradient(90deg, #fff, #dbe6ff, #fff);
   background-size: 200% auto;
   color: transparent;
-  -webkit-background-clip: text;
+  background-clip: text;
   animation: brilhoTexto 2s linear infinite;
   filter: drop-shadow(0 0 15px #fff);
 }
@@ -283,16 +282,11 @@ input:checked + .slider .emoji {
 <body>
 
 <!-- ===========================================
-     TOPO FINAL (AJUSTADO)
-=========================================== -->
-
-<!-- ===========================================
-     TOPO FINAL (AJUSTADO)
+     TOPO FINAL
 =========================================== -->
 
 <div class="topo">
 
-  <!-- ÍCONE + TÍTULO JUNTOS (ESQUERDA) -->
   <div style="display:flex; align-items:center; gap:10px;">
       <div class="hamburguer" onclick="abrirMenu()">☰</div>
 
@@ -304,10 +298,8 @@ input:checked + .slider .emoji {
       </div>
   </div>
 
-  <!-- TÍTULO CENTRAL (AGORA REALMENTE NO CENTRO) -->
   <div class="titulo-central">Início</div>
 
-  <!-- SWITCH DE TEMA (LADO DIREITO) -->
   <label class="theme-switch">
     <input type="checkbox" id="theme-toggle">
     <span class="slider"><span class="emoji">🌞</span></span>
@@ -339,11 +331,23 @@ input:checked + .slider .emoji {
   </div>
 </section>
 
-<h1 class="tit">Evento e Notícias do mês</h1>
+<h1 class="tit">
+  Evento e Notícias do mês de <span id="mes-atual"></span>
+</h1>
+
+<!-- ===================================================
+     SECTION COM DATA AUTOMÁTICA IMPLEMENTADA
+=================================================== -->
 <section class="hero-section">
-  <p>Lorem ipsum dolor sit amet…</p>
+
+  <!-- DATA AUTOMÁTICA AQUI -->
+  <p class="data-hoje">
+    📅 Hoje é <span id="data-atual"></span>
+  </p>
+
+
   <div class="button-container">
-    <button class="cta-button">ver calendário</button>
+    <button class="cta-button" onclick="window.location.href='eventos.html'">ver calendário</button>
   </div>
 </section>
 
@@ -372,6 +376,7 @@ input:checked + .slider .emoji {
 =========================================== -->
 <script>
 
+// MENU
 function abrirMenu() {
   menu.classList.add("ativo");
   overlay.classList.add("ativo");
@@ -385,13 +390,45 @@ function fecharMenu() {
 const menu = document.getElementById("menu");
 const overlay = document.getElementById("overlay");
 
-/* TEMA */
+
+// TEMA
 const toggle = document.getElementById("theme-toggle");
 const emoji = document.querySelector(".emoji");
 
 toggle.addEventListener("change", () => {
   document.body.classList.toggle("dark-mode");
   emoji.textContent = toggle.checked ? "🌙" : "🌞";
+});
+
+
+// ============================
+//   PEGAR MÊS + DATA COMPLETA
+// ============================
+document.addEventListener("DOMContentLoaded", function () {
+
+  const meses = [
+    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+  ];
+
+  const diasSemana = [
+    "Domingo", "Segunda-feira", "Terça-feira",
+    "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"
+  ];
+
+  const agora = new Date();
+  const dia = agora.getDate();
+  const mes = meses[agora.getMonth()];
+  const ano = agora.getFullYear();
+  const diaSemana = diasSemana[agora.getDay()];
+
+  // mês no título
+  document.getElementById("mes-atual").textContent = mes;
+
+  // data completa
+  const dataFormatada = `${diaSemana}, ${dia} de ${mes} de ${ano}`;
+  document.getElementById("data-atual").textContent = dataFormatada;
+
 });
 
 </script>
