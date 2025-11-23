@@ -51,7 +51,7 @@ body {
   color: var(--text-color);
   transition: .25s;
   min-height: 100vh;
-  padding-bottom: 30px;
+  padding-bottom: 0;
 }
 
 /* ------------------------------------------
@@ -218,7 +218,7 @@ input:checked + .slider .emoji {
   font-size: 22px;
   margin: 45px 0 12px 60px;
   font-weight: bold;
- text-shadow: 0 0 10px rgba(13,110,253,0.4);
+  text-shadow: 0 0 10px var(--title-glow);
 }
 
 /* ------------------------------------------
@@ -276,6 +276,21 @@ input:checked + .slider .emoji {
   min-width: 240px;
 }
 
+/* ------------------------------------------
+   FOOTER
+------------------------------------------ */
+.footer {
+  width: 100%;
+  background: var(--primary);
+  color: #fff;
+  text-align: center;
+  padding: 18px 0;
+  margin-top: 45px;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 -3px 12px rgba(0,0,0,0.25);
+}
+
 </style>
 
 </head>
@@ -325,9 +340,9 @@ input:checked + .slider .emoji {
 
 <h1 class="tit">Apresentação da escola</h1>
 <section class="hero-section">
-  <p>A Sanico Teles oferece Ensino Fundamental, Ensino Médio e cursos técnicos como Informática e Energias Renováveis. Com estrutura moderna e equipes dedicadas, buscamos formar cidadãos preparados para o mundo atual.</p>
+  <p>Escola Estadual Sanico Teles</p>
   <div class="button-container">
-    <button class="cta-button" onclick="window.location.href='historia.html'">saber mais</button>
+    <button class="cta-button">saber mais</button>
   </div>
 </section>
 
@@ -335,16 +350,11 @@ input:checked + .slider .emoji {
   Evento e Notícias do mês de <span id="mes-atual"></span>
 </h1>
 
-<!-- ===================================================
-     SECTION COM DATA AUTOMÁTICA IMPLEMENTADA
-=================================================== -->
 <section class="hero-section">
 
-  <!-- DATA AUTOMÁTICA AQUI -->
   <p class="data-hoje">
     📅 Hoje é <span id="data-atual"></span>
   </p>
-
 
   <div class="button-container">
     <button class="cta-button" onclick="window.location.href='eventos.html'">ver calendário</button>
@@ -370,6 +380,14 @@ input:checked + .slider .emoji {
   </div>
 
 </div>
+
+<!-- ===========================================
+     FOOTER
+=========================================== -->
+
+<footer class="footer">
+ © 2025 Escola Estadual Sanico Teles
+</footer>
 
 <!-- ===========================================
      SCRIPT
@@ -401,9 +419,7 @@ toggle.addEventListener("change", () => {
 });
 
 
-// ============================
-//   PEGAR MÊS + DATA COMPLETA
-// ============================
+// PEGAR MÊS + DATA COMPLETA
 document.addEventListener("DOMContentLoaded", function () {
 
   const meses = [
@@ -422,10 +438,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const ano = agora.getFullYear();
   const diaSemana = diasSemana[agora.getDay()];
 
-  // mês no título
   document.getElementById("mes-atual").textContent = mes;
 
-  // data completa
   const dataFormatada = `${diaSemana}, ${dia} de ${mes} de ${ano}`;
   document.getElementById("data-atual").textContent = dataFormatada;
 
