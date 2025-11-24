@@ -323,48 +323,64 @@ input:checked + .slider .emoji {
 /* MODAL */
 .modal-meses {
   position: fixed;
-  top: 50%; left: 50%;
-  transform: translate(-50%,-50%) scale(0.9);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
   background-color: var(--modal-bg);
-  border-radius: 18px;
-  box-shadow: 0 8px 26px var(--card-shadow);
-  padding: 25px 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  padding: 30px 25px;
   z-index: 100;
-  width: 340px; max-width: 90%;
-  opacity: 0; transition: all .25s ease; display:none;
+  width: 400px;
+  max-width: 90%;
+  opacity: 0;
+  transition: all 0.25s ease;
+  display: none;
 }
 .modal-meses.ativo { 
-  display:block; 
-  opacity:1; 
-  transform:translate(-50%,-50%) scale(1); 
+  display: block;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
-.modal-meses h3 { 
-  text-align:center; 
-  margin-bottom:18px; 
-  color:var(--text-color); 
-  font-weight:600; 
+
+.modal-meses h3 {
+  text-align: center;
+  margin-bottom: 28px;
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 1.3rem;
 }
-.meses-grid { 
-  display:grid; 
-  grid-template-columns:repeat(3,1fr); 
-  gap:12px; 
+
+/* grid dos meses */
+.meses-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
-.meses-grid button { 
-  background:var(--primary); 
-  border:none; 
-  color:#fff; 
-  border-radius:10px; 
-  padding:10px; 
-  cursor:pointer; 
-  font-size:0.9rem; 
-  font-weight:500; 
-  box-shadow:0 4px 10px rgba(0,0,0,0.1); 
-  transition: all .2s; 
+
+/* botões dos meses */
+.meses-grid button {
+  background-color: #f0f0f0; /* neutro e profissional */
+  color: var(--text-color);
+  border: 1px solid #d1d1d1;
+  border-radius: 12px;
+  padding: 16px 0;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: capitalize;
 }
-.meses-grid button:hover { 
-  background: var(--button-hover); 
-  transform: translateY(-2px); 
+
+.meses-grid button:hover {
+  background-color: #e0e0e0; /* leve escurecimento */
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
 }
+
 
 /* RODAPÉ */
 .rodape {
@@ -461,20 +477,23 @@ body.dark-mode .rodape {
 <div id="modalMeses" class="modal-meses">
   <h3>Escolha um mês</h3>
   <div class="meses-grid">
-    <button onclick="selecionarMes('Janeiro')">Jan</button>
-    <button onclick="selecionarMes('Fevereiro')">Fev</button>
-    <button onclick="selecionarMes('Março')">Mar</button>
-    <button onclick="selecionarMes('Abril')">Abr</button>
-    <button onclick="selecionarMes('Maio')">Mai</button>
-    <button onclick="selecionarMes('Junho')">Jun</button>
-    <button onclick="selecionarMes('Julho')">Jul</button>
-    <button onclick="selecionarMes('Agosto')">Ago</button>
-    <button onclick="selecionarMes('Setembro')">Set</button>
-    <button onclick="selecionarMes('Outubro')">Out</button>
-    <button onclick="selecionarMes('Novembro')">Nov</button>
-    <button onclick="selecionarMes('Dezembro')">Dez</button>
+    <button onclick="selecionarMes('Janeiro')">Janeiro</button>
+    <button onclick="selecionarMes('Fevereiro')">Fevereiro</button>
+    <button onclick="selecionarMes('Março')">Março</button>
+    <button onclick="selecionarMes('Abril')">Abril</button>
+    <button onclick="selecionarMes('Maio')">Maio</button>
+    <button onclick="selecionarMes('Junho')">Junho</button>
+    <button onclick="selecionarMes('Julho')">Julho</button>
+    <button onclick="selecionarMes('Agosto')">Agosto</button>
+    <button onclick="selecionarMes('Setembro')">Setembro</button>
+    <button onclick="selecionarMes('Outubro')">Outubro</button>
+    <button onclick="selecionarMes('Novembro')">Novembro</button>
+    <button onclick="selecionarMes('Dezembro')">Dezembro</button>
   </div>
 </div>
+
+
+
 
 <footer class="rodape">
   © 2025 Escola Estadual Sanico Teles
@@ -502,16 +521,57 @@ function fecharModalMeses(){
   document.getElementById('overlay').classList.remove('ativo'); 
 }
 
-const eventos={
-  Janeiro:[{data:"10/01",nome:"Volta às Aulas",hora:"07:30 - 12:00"}],
-  Fevereiro:[{data:"10/02",nome:"Festa de Carnaval",hora:"09:00 - 12:00"}],
-  Março:[{data:"08/03",nome:"Dia da Mulher",hora:"Manhã"}],
-  Novembro:[
-    {data:"15/11",nome:"Desfile da Independência",hora:"08:00 - 12:00"},
-    {data:"20/11",nome:"Dia da Consciência Negra",hora:"Durante o dia"}
+const eventos = {
+  Janeiro: [
+    {data: "10/01", nome: "Volta às Aulas", hora: "07:30 - 12:00"},
+    {data: "20/01", nome: "Reunião Inicial com Pais", hora: "08:00 - 10:00"}
   ],
-  Dezembro:[{data:"05/12",nome:"Feira de Ciências",hora:"14:00 - 17:00"}]
+  Fevereiro: [
+    {data: "15/02", nome: "Festa de Carnaval", hora: "09:00 - 12:00"},
+    {data: "28/02", nome: "Apresentação Cultural", hora: "14:00 - 16:00"}
+  ],
+  Março: [
+    {data: "08/03", nome: "Dia da Mulher", hora: "Manhã"},
+    {data: "20/03", nome: "Palestra: Educação Ambiental", hora: "09:00 - 11:00"}
+  ],
+  Abril: [
+    {data: "15/04", nome: "Feira de Livros", hora: "13:00 - 17:00"},
+    {data: "22/04", nome: "Dia da Terra", hora: "08:00 - 12:00"}
+  ],
+  Maio: [
+    {data: "10/05", nome: "Dia das Mães", hora: "09:00 - 12:00"},
+    {data: "25/05", nome: "Projeto de Ciências", hora: "14:00 - 17:00"}
+  ],
+  Junho: [
+    {data: "12/06", nome: "Dia dos Namorados", hora: "Manhã"},
+    {data: "20/06", nome: "Festival de Música", hora: "14:00 - 18:00"}
+  ],
+  Julho: [
+    {data: "05/07", nome: "Recesso Escolar", hora: "Todo o dia"},
+    {data: "20/07", nome: "Oficina de Arte", hora: "09:00 - 12:00"}
+  ],
+  Agosto: [
+    {data: "11/08", nome: "Semana da Educação Física", hora: "08:00 - 12:00"},
+    {data: "25/08", nome: "Palestra sobre Saúde", hora: "09:00 - 11:00"}
+  ],
+  Setembro: [
+    {data: "07/09", nome: "Desfile da Independência", hora: "08:00 - 12:00"},
+    {data: "21/09", nome: "Dia da Árvore", hora: "Manhã"}
+  ],
+  Outubro: [
+    {data: "12/10", nome: "Dia das Crianças", hora: "09:00 - 12:00"},
+    {data: "31/10", nome: "Halloween Escolar", hora: "14:00 - 17:00"}
+  ],
+  Novembro: [
+    {data: "15/11", nome: "Desfile da Independência", hora: "08:00 - 12:00"},
+    {data: "20/11", nome: "Dia da Consciência Negra", hora: "Durante o dia"}
+  ],
+  Dezembro: [
+    {data: "05/12", nome: "Feira de Ciências", hora: "14:00 - 17:00"},
+    {data: "20/12", nome: "Festa de Encerramento do Ano", hora: "18:00 - 21:00"}
+  ]
 };
+
 
 function selecionarMes(mes){
   fecharModalMeses();
@@ -554,3 +614,4 @@ if(toggle){
 </script>
 </body>
 </html>
+
