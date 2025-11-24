@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contato — E. E. Sanico Teles</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* ===========================
+       VARIÁVEIS
+    ============================ */
+    :root {
+      --bg-color: #f2f4ff;
+      --text-color: #232323;
+      --card-bg: #f7f7f7;
+      --card-border: #ddd;
+      --card-shadow: rgba(0, 0, 0, 0.08);
+      --primary: #232323;
+      --button-hover: #333;
+      --modal-bg: rgba(0,0,0,0.55);
+      --modal-scale: scale(0.85);
+    }
+
+    body.dark-mode {
+      --bg-color: #0f0f0f;
+      --text-color: #e7e7e7;
+      --card-bg: #1a1a1a;
+      --card-border: rgba(255,255,255,0.05);
+      --card-shadow: rgba(255,255,255,0.06);
+      --primary: #e7e7e7;
+      --button-hover: #444;
+      --modal-bg: rgba(0,0,0,0.7);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color .25s, color .25s;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===========================
+       TOPO
+    ============================ */
+
+    .topo {
+      background-color: rgb(19, 79, 189);
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 18px;
+      position: relative;
+      box-shadow: 0 0 25px rgba(0,153,255,0.4);
+      border-bottom: 2px solid rgba(0,153,255,0.4);
+    }
+
+    .tit-escola {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 20px rgba(255,255,255,1);
+      animation: brilhoLogo 2.5s infinite alternate;
+    }
+
+    @keyframes brilhoLogo {
+      from { box-shadow: 0 0 10px rgba(255, 255, 255, 0.7); }
+      to   { box-shadow: 0 0 24px rgba(255, 255, 255, 1); }
+    }
+
+    .nome-escola {
+      font-size: 18px;
+      font-weight: bold;
+      background: linear-gradient(90deg,#fff,#dbe6ff,#fff);
+      color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+      animation: brilhoTexto 2s linear infinite;
+      filter: drop-shadow(0 0 8px rgba(255,255,255,1));
+    }
+
+    .titulo-central {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 20px;
+      font-weight: bold;
+      color: transparent;
+      background: linear-gradient(90deg,#fff,#cddcff,#fff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      animation: brilhoTexto 2s linear infinite;
+      filter: drop-shadow(0 0 10px rgba(255,255,255,1));
+    }
+
+    @keyframes brilhoTexto {
+      to { background-position: 200% center; }
+    }
+
+    .hamburguer {
+      font-size: 28px;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    /* ===========================
+       TEMA
+    ============================ */
+
+    .modo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-direction: column;
+    }
+
+    .theme-switch {
+      position: relative;
+      width: 48px;
+      height: 26px;
+      display: inline-block;
+    }
+
+    .theme-switch input { opacity: 0; }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: #ebebeb;
+      border: 1px solid rgba(0,0,0,0.12);
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      transition: .25s;
+    }
+
+    .slider .emoji {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #232323;
+      color: #fff;
+      font-size: 12px;
+    }
+
+    input:checked + .slider {
+      justify-content: flex-end;
+      background: #333;
+    }
+
+    input:checked + .slider .emoji {
+      background: #fff;
+      color: #000;
+    }
+
+    /* ===========================
+       MENU LATERAL
+    ============================ */
+
+    .menu-lateral {
+      position: fixed;
+      left: -250px;
+      top: 0;
+      width: 250px;
+      height: 100%;
+      background: #222;
+      color: white;
+      transition: left .28s;
+      padding-top: 60px;
+      z-index: 40;
+    }
+
+    .menu-lateral.ativo { left: 0; }
+
+    .menu-lateral a {
+      display: block;
+      padding: 14px 20px;
+      color: #fff;
+    }
+
+    .menu-lateral a:hover { background: #444; }
+
+    .overlay {
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background: rgba(0,0,0,0.4);
+      display:none;
+      z-index:30;
+    }
+
+    .overlay.ativo { display:block; }
+
+    /* ===========================
+       CONTEÚDO
+    ============================ */
+
+    main {
+      flex: 1;
+      padding: 30px 15px;
+    }
+
+    .contato-container {
+      max-width: 700px;
+      background: var(--card-bg);
+      margin: 0 auto;
+      padding: 35px 25px;
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 0 20px var(--card-shadow);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+    }
+
+    .contato-title {
+      width: 100%;
+      text-align: center;
+      font-size: 32px;
+      font-weight: 800;
+    }
+
+    .contato-sub {
+      width: 100%;
+      text-align: center;
+      opacity: .85;
+      margin-bottom: 20px;
+    }
+
+    .info {
+      flex: 1;
+      min-width: 280px;
+      border-right: 1px solid var(--card-border);
+      padding-right: 25px;
+    }
+
+    .info p {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .redes {
+      margin-top: 20px;
+      display: flex;
+      gap: 25px;
+    }
+
+    .redes i {
+      font-size: 36px;
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .redes i:hover {
+      transform: translateY(-5px) scale(1.15);
+      color: var(--primary);
+    }
+
+    .form {
+      flex: 2;
+      min-width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .form input,
+    .form textarea {
+      width:100%;
+      padding:16px;
+      border-radius:12px;
+      border:1px solid var(--card-border);
+      background:var(--card-bg);
+      color:var(--text-color);
+    }
+
+    textarea {
+      height:170px;
+      resize:vertical;
+    }
+
+    .botao {
+      background:rgb(19,79,189);
+      color:#fff;
+      border:none;
+      padding:14px 28px;
+      border-radius:12px;
+      font-weight:700;
+      cursor:pointer;
+      transition: .25s;
+    }
+
+    .botao:hover { background:#0f3faa; }
+
+    /* ===========================
+       MODAIS (CORRIGIDOS)
+    ============================ */
+/* Fundo escurecido */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
+  animation: fadeIn .25s ease;
+}
+
+/* Caixa do modal */
+.modal-content {
+  background: #ffffff;
+  color: #333;
+  width: 90%;
+  max-width: 420px;
+  margin: 10% auto;
+  padding: 30px 25px;
+  border-radius: 18px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.25);
+  animation: slideDown .3s ease;
+  text-align: center;
+}
+
+/* Ícone grande */
+.modal-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  color: #1e66ff;
+}
+
+/* X de fechar */
+.modal-close {
+  float: right;
+  font-size: 28px;
+  cursor: pointer;
+  color: #333;
+  margin-top: -10px;
+  margin-right: -5px;
+}
+
+/* Título */
+.modal-content h2 {
+  margin-top: 5px;
+  font-size: 22px;
+  color: #1e66ff;
+  font-weight: bold;
+}
+
+/* Texto */
+.modal-content p {
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+/* Animações */
+@keyframes slideDown {
+  from {
+    transform: translateY(-25px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+    /* ===========================
+       RODAPÉ
+    ============================ */
+
+    .rodape {
+      text-align:center;
+      padding:18px 0;
+      font-size:15px;
+      font-weight:500;
+      color:#fff;
+      background:rgb(19,79,189);
+      border-top:2px solid rgba(0,153,255,0.4);
+      box-shadow:0 0 25px rgba(0,153,255,0.4);
+      margin-top:40px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOPO -->
+  <div class="topo">
+    <div class="tit-escola">
+      <div class="hamburguer" onclick="abrirMenu()">☰</div>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoCakRBO6pZxb-xrHIZAI4QZS_YTVVM6at-g&s" class="logo">
+      <span class="nome-escola">E. E. Sanico Teles</span>
+    </div>
+
+    <div class="titulo-central">Contato</div>
+
+    <div class="modo">
+      <label class="theme-switch">
+        <input type="checkbox" id="theme-toggle" />
+        <span class="slider"><span class="emoji" id="emojiToggle">🌞</span></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- MENU -->
+  <div id="menu" class="menu-lateral">
+    <a href="index.html">Início</a>
+    <a href="historia.html">A Escola</a>
+    <a href="eventos.html">Eventos/Noticias</a>
+    <a href="areas.html">Áreas</a>
+    <a href="contato.html">Contato</a>
+  </div>
+
+  <div id="overlay" class="overlay" onclick="fecharMenu()"></div>
+
+  <!-- CONTEÚDO -->
+  <main>
+    <div class="contato-container">
+      <div class="contato-title">Quer falar com a gente?</div>
+      <div class="contato-sub">Envie sua mensagem que retornaremos o mais rápido possível.</div>
+
+      <div class="info">
+        <p><i class="fa-solid fa-handshake-angle"></i> Estamos à disposição para ajudar!</p>
+        <p><i class="fa-solid fa-location-dot"></i> R. Olavo Marquês, 181<br>S.R. do Sapucaí, MG</p>
+
+        <div class="redes">
+          <i class="fab fa-instagram" id="abrirInsta"></i>
+          <i class="fab fa-whatsapp" id="abrirWhatsapp"></i>
+        </div>
+      </div>
+
+      <form class="form">
+        <input type="text" placeholder="Nome*" required>
+        <input type="email" placeholder="E-mail*" required>
+        <textarea placeholder="Como podemos ajudar?*" required></textarea>
+        <button type="submit" class="botao">Enviar</button>
+      </form>
+    </div>
+  </main>
+
+<!-- Modal de Aviso -->
+<div id="avisoModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close" onclick="fecharModal()">&times;</span>
+
+    <div class="modal-icon">
+      <i class="fa-solid fa-circle-info"></i>
+    </div>
+
+    <h2>Aviso de Redirecionamento</h2>
+
+    <p>
+      Você está prestes a acessar o <strong>Instagram</strong> ou o <strong>WhatsApp oficial da escola</strong>.  
+      No momento, estamos organizando os links finais.  
+      Assim que o canal oficial estiver disponível, o botão levará você diretamente para a página correta.
+    </p>
+
+    <p>
+      Por enquanto, esta é apenas uma <strong>prévia do funcionamento</strong>.  
+      Obrigado pela compreensão!
+    </p>
+  </div>
+</div>
+
+
+  <!-- RODAPÉ -->
+  <footer class="rodape">
+    © 2025 Escola Estadual Sanico Teles
+  </footer>
+
+<script>
+  /* MENU */
+  function abrirMenu() {
+    document.getElementById('menu').classList.add('ativo');
+    document.getElementById('overlay').classList.add('ativo');
+  }
+  function fecharMenu() {
+    document.getElementById('menu').classList.remove('ativo');
+    document.getElementById('overlay').classList.remove('ativo');
+  }
+
+  /* TEMA */
+  const toggle = document.getElementById('theme-toggle');
+  const emoji = document.getElementById('emojiToggle');
+
+  toggle.addEventListener('change', () => {
+    const dark = toggle.checked;
+    document.body.classList.toggle('dark-mode', dark);
+    emoji.textContent = dark ? "🌙" : "🌞";
+    localStorage.setItem("theme", dark ? "dark" : "light");
+  });
+
+  (function initTheme() {
+    const saved = localStorage.getItem("theme");
+    if(saved === "dark"){
+      document.body.classList.add("dark-mode");
+      toggle.checked = true;
+      emoji.textContent = "🌙";
+    }
+  })();
+
+function abrirModal() {
+  document.getElementById("avisoModal").style.display = "block";
+}
+
+function fecharModal() {
+  document.getElementById("avisoModal").style.display = "none";
+}
+
+// Fechar clicando fora
+window.onclick = function(event) {
+  let modal = document.getElementById("avisoModal");
+  if (event.target === modal) {
+    fecharModal();
+  }
+}
+
+// Ações dos botões
+document.getElementById("abrirInsta").onclick = abrirModal;
+document.getElementById("abrirWhatsapp").onclick = abrirModal;
+</script>
+
+</body>
+</html>
