@@ -50,8 +50,14 @@ body {
   background: var(--bg-color);
   color: var(--text-color);
   transition: .25s;
+
   min-height: 100vh;
-  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+footer.footer {
+  margin-top: auto;
 }
 
 /* ------------------------------------------
@@ -70,14 +76,12 @@ body {
   z-index: 20;
 }
 
-/* HAMBÚRGUER */
 .hamburguer {
   font-size: 27px;
   cursor: pointer;
   margin-right: 10px;
 }
 
-/* LOGO + NOME */
 .tit-escola {
   display: flex;
   align-items: center;
@@ -109,7 +113,6 @@ body {
   filter: drop-shadow(0 0 15px #fff);
 }
 
-/* TÍTULO CENTRAL */
 .titulo-central {
   position: absolute;
   left: 50%;
@@ -128,7 +131,7 @@ body {
   to { background-position: 200% center; }
 }
 
-/* SWITCH DE TEMA */
+/* SWITCH */
 .theme-switch {
   position: relative;
   width: 48px;
@@ -198,9 +201,7 @@ input:checked + .slider .emoji {
   text-decoration: none;
 }
 
-.menu-lateral a:hover {
-  background: #444;
-}
+.menu-lateral a:hover { background: #444; }
 
 .overlay {
   position: fixed;
@@ -262,7 +263,24 @@ input:checked + .slider .emoji {
   transform: scale(1.05);
 }
 
-/* CARDS DE ACESSO RÁPIDO */
+/* ------------------------------------------
+   TEXTO ESTILIZADO (IGUAL AO DE CIMA)
+------------------------------------------ */
+.texto-bonito,
+.data-hoje {
+  font-size: 17px;
+  line-height: 1.7;
+  padding: 18px 22px;
+  border-left: 4px solid var(--primary);
+  border-radius: 6px;
+  background: linear-gradient(to right, rgba(19,79,189,0.08), transparent);
+  box-shadow: 0 0 12px rgba(0,0,0,0.08);
+  font-weight: 500;
+  text-shadow: 0 0 8px rgba(19,79,189,0.25);
+  margin-bottom: 20px;
+}
+
+/* CARDS */
 .acesso-rapido {
   width: 80%;
   margin: 15px auto;
@@ -274,6 +292,32 @@ input:checked + .slider .emoji {
 .card {
   flex: 1;
   min-width: 240px;
+}
+
+/* ------------------------------------------
+   CALENDÁRIO AUTOMÁTICO
+------------------------------------------ */
+#calendario table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  margin-top: 15px;
+}
+
+#calendario th {
+  padding: 10px;
+  background: var(--primary);
+  color: #fff;
+}
+
+#calendario td {
+  padding: 10px;
+  border: 1px solid var(--card-border);
+}
+
+#calendario td:hover {
+  background: rgba(19,79,189,0.15);
+  cursor: pointer;
 }
 
 /* ------------------------------------------
@@ -297,7 +341,7 @@ input:checked + .slider .emoji {
 <body>
 
 <!-- ===========================================
-     TOPO FINAL
+     TOPO
 =========================================== -->
 
 <div class="topo">
@@ -340,7 +384,12 @@ input:checked + .slider .emoji {
 
 <h1 class="tit">Apresentação da escola</h1>
 <section class="hero-section">
-  <p>Escola Estadual Sanico Teles</p>
+
+  <p class="texto-bonito">
+    A Escola Estadual Sanico Teles oferece Ensino Fundamental, Ensino Médio e cursos técnicos como Informática e Energias Renováveis.  
+    Com estrutura moderna e equipes dedicadas, buscamos formar cidadãos preparados para o mundo atual.
+  </p>
+
   <div class="button-container">
     <button class="cta-button">saber mais</button>
   </div>
@@ -353,7 +402,7 @@ input:checked + .slider .emoji {
 <section class="hero-section">
 
   <p class="data-hoje">
-    📅 Hoje é <span id="data-atual"></span>
+    📅 Mês atual: <span id="mes-ano-atual"></span>
   </p>
 
   <div class="button-container">
@@ -381,10 +430,18 @@ input:checked + .slider .emoji {
 
 </div>
 
+<!-- ============================
+     CALENDÁRIO AUTOMÁTICO
+============================= -->
+<h1 class="tit">Calendário do mês</h1>
+
+<section class="hero-section">
+  <div id="calendario"></div>
+</section>
+
 <!-- ===========================================
      FOOTER
 =========================================== -->
-
 <footer class="footer">
  © 2025 Escola Estadual Sanico Teles
 </footer>
@@ -394,7 +451,6 @@ input:checked + .slider .emoji {
 =========================================== -->
 <script>
 
-// MENU
 function abrirMenu() {
   menu.classList.add("ativo");
   overlay.classList.add("ativo");
@@ -408,21 +464,16 @@ function fecharMenu() {
 const menu = document.getElementById("menu");
 const overlay = document.getElementById("overlay");
 
-
 // TEMA
 const toggle = document.getElementById("theme-toggle");
 const emoji = document.querySelector(".emoji");
 
-// Salvar tema quando mudar
 toggle.addEventListener("change", () => {
   document.body.classList.toggle("dark-mode");
   emoji.textContent = toggle.checked ? "🌙" : "🌞";
-
-  const tema = toggle.checked ? "dark" : "light";
-  localStorage.setItem("tema", tema);
+  localStorage.setItem("tema", toggle.checked ? "dark" : "light");
 });
 
-// Carregar tema salvo ao abrir a página
 document.addEventListener("DOMContentLoaded", () => {
   const temaSalvo = localStorage.getItem("tema");
 
@@ -431,14 +482,11 @@ document.addEventListener("DOMContentLoaded", () => {
     toggle.checked = true;
     emoji.textContent = "🌙";
   } else {
-    document.body.classList.remove("dark-mode");
-    toggle.checked = false;
     emoji.textContent = "🌞";
   }
 });
 
-
-// PEGAR MÊS + DATA COMPLETA
+// DATA — mês e ano automáticos
 document.addEventListener("DOMContentLoaded", function () {
 
   const meses = [
@@ -446,23 +494,66 @@ document.addEventListener("DOMContentLoaded", function () {
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
   ];
 
-  const diasSemana = [
-    "Domingo", "Segunda-feira", "Terça-feira",
-    "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"
-  ];
-
   const agora = new Date();
-  const dia = agora.getDate();
   const mes = meses[agora.getMonth()];
   const ano = agora.getFullYear();
-  const diaSemana = diasSemana[agora.getDay()];
 
   document.getElementById("mes-atual").textContent = mes;
-
-  const dataFormatada = `${diaSemana}, ${dia} de ${mes} de ${ano}`;
-  document.getElementById("data-atual").textContent = dataFormatada;
-
+  document.getElementById("mes-ano-atual").textContent = `${mes} de ${ano}`;
 });
+
+
+// ===== CALENDÁRIO AUTOMÁTICO =====
+function gerarCalendario() {
+  const calendario = document.getElementById("calendario");
+
+  const meses = [
+    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+  ];
+
+  const hoje = new Date();
+  const mes = hoje.getMonth();
+  const ano = hoje.getFullYear();
+
+  const primeiroDia = new Date(ano, mes, 1).getDay();
+  const totalDias = new Date(ano, mes + 1, 0).getDate();
+
+  let tabela = `
+    <h2 style="text-align:center; margin-bottom:15px;">
+      ${meses[mes]} de ${ano}
+    </h2>
+    <table>
+      <tr>
+        <th>Dom</th><th>Seg</th><th>Ter</th><th>Qua</th>
+        <th>Qui</th><th>Sex</th><th>Sáb</th>
+      </tr>
+      <tr>
+  `;
+
+  let diaSemana = 0;
+
+  for (let i = 0; i < primeiroDia; i++) {
+    tabela += "<td></td>";
+    diaSemana++;
+  }
+
+  for (let dia = 1; dia <= totalDias; dia++) {
+    tabela += `<td>${dia}</td>`;
+    diaSemana++;
+
+    if (diaSemana === 7) {
+      tabela += "</tr><tr>";
+      diaSemana = 0;
+    }
+  }
+
+  tabela += "</tr></table>";
+
+  calendario.innerHTML = tabela;
+}
+
+gerarCalendario();
 
 </script>
 
