@@ -254,6 +254,139 @@ body.dark-mode .rodape {
   border-top: 2px solid rgba(0,153,255,0.4);
   box-shadow: 0 0 25px rgba(0,153,255,0.4);
 }
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 200;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: var(--card-bg);
+  color: var(--text-color);
+  padding: 25px;
+  width: 90%;
+  max-width: 450px;
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.25);
+  animation: modalShow .25s ease;
+}
+
+@keyframes modalShow {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-content { position: relative; } /* garante contexto de empilhamento */
+
+.modal-close {
+  position: absolute;   /* precisa ser posicionado para z-index funcionar */
+  top: 12px;
+  right: 15px;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text-color);
+  z-index: 9999;        /* agora será aplicado */
+  pointer-events: auto;
+  background: transparent;
+  border-radius: 6px;
+  padding: 4px 6px;     /* aumenta área clicável */
+  transition: transform .12s ease, color .12s ease;
+  user-select: none;
+}
+
+.modal-close:hover {
+  transform: scale(1.08);
+  color: crimson;
+}
+
+/* MODAL DE CONSTRUÇÃO */
+.construcao-box {
+  text-align: center;
+  padding: 32px;
+}
+
+.construcao-icone {
+  font-size: 60px;
+  margin-bottom: 15px;
+  animation: flutuar 1.8s infinite ease-in-out;
+}
+
+@keyframes flutuar {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+  100% { transform: translateY(0); }
+}
+
+.construcao-titulo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: var(--text-color);
+}
+
+.construcao-texto {
+  font-size: 1rem;
+  color: var(--text-color);
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+.construcao-btn {
+  background: rgb(19,79,189);
+  color: #fff;
+  padding: 10px 22px;
+  border: none;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 12px rgba(0,153,255,0.4);
+}
+
+.construcao-btn:hover {
+  transform: scale(1.06);
+  background: #0f3faa;
+}
+
+.bimestre-box {
+  background: rgba(120,145,255,0.08);
+  padding: 12px 15px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  border-left: 4px solid rgb(19,79,189);
+}
+
+.bimestre-box h3 {
+  margin-bottom: 6px;
+  font-size: 1.15rem;
+}
+
+.item-modal {
+  background: var(--card-bg);
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid var(--card-border);
+}
+
+.item-modal h3 {
+  margin-bottom: 6px;
+  font-size: 18px;
+  color: var(--primary);
+}
+
 </style>
 </head>
 <body>
@@ -290,12 +423,12 @@ body.dark-mode .rodape {
     <div class="action-card">
       <div class="action-title">Provas</div>
       <div class="action-desc">Acesso às provas, simulados e resultados.</div>
-      <button class="action-btn">Acessar</button>
+      <button class="action-btn" onclick="abrirModal('modal-provas')">Acessar</button>
     </div>
     <div class="action-card">
       <div class="action-title">Boletins</div>
       <div class="action-desc">Consulte seu boletim escolar atualizado.</div>
-      <button class="action-btn">Acessar</button>
+      <button class="action-btn" onclick="abrirModal('modal-boletins')">Acessar</button>
     </div>
   </div>
 </div>
@@ -306,12 +439,12 @@ body.dark-mode .rodape {
     <div class="action-card">
       <div class="action-title">Reuniões</div>
       <div class="action-desc">Agendas, pautas e atas de reuniões.</div>
-      <button class="action-btn">Acessar</button>
+      <button class="action-btn" onclick="abrirModal('modal-reunioes')">Acessar</button>
     </div>
     <div class="action-card">
       <div class="action-title">Eventos</div>
       <div class="action-desc">Informações sobre eventos escolares e datas importantes.</div>
-      <button class="action-btn">Acessar</button>
+      <button class="action-btn" onclick="abrirModal('modal-eventos')">Acessar</button>
     </div>
   </div>
 </div>
@@ -322,40 +455,278 @@ body.dark-mode .rodape {
     <div class="action-card">
       <div class="action-title">Módulo</div>
       <div class="action-desc">Gerenciar conteúdos e suas turmas.</div>
-      <button class="action-btn">Acessar</button>
+      <button class="action-btn" onclick="abrirModal('modal-construcao')">Acessar</button>
     </div>
+
     <div class="action-card">
       <div class="action-title">Fechamento de notas</div>
       <div class="action-desc">Lançamento e consulta de notas e avaliações.</div>
-      <button class="action-btn">Acessar</button>
+      <button class="action-btn" onclick="abrirModal('modal-construcao')">Acessar</button>
+    </div>
+
+  </div>
+</div>
+<!-- MODAIS -->
+<!-- MODAL — PROVAS -->
+<div id="modal-provas" class="modal">
+  <div class="modal-content">
+    <span class="modal-close" onclick="fecharModal('modal-provas')">&times;</span>
+
+    <div style="text-align:center; margin-bottom: 15px;">
+      <div style="font-size:55px; animation: flutuar 2s infinite ease-in-out;">📝</div>
+      <h2 style="font-size:1.7rem; margin-top:10px;">Provas e Recuperações</h2>
+    </div>
+
+    <div class="bimestre-box">
+      <h3>📘 1º Bimestre</h3>
+      <p>📅 <b>Provas:</b> 10/03/2025 a 14/03/2025</p>
+      <p>📅 Recuperação — <b>24/03/2025 a 28/03/2025</b></p>
+    </div>
+
+    <div class="bimestre-box">
+      <h3>📙 2º Bimestre</h3>
+      <p>📅 <b>Provas:</b> 10/06/2025 a 13/06/2025</p>
+      <p>📅 Recuperação — <b>23/06/2025 a 27/06/2025</b></p>
+    </div>
+
+    <div class="bimestre-box">
+      <h3>📕 3º Bimestre</h3>
+      <p>📅 <b>Provas:</b> 15/09/2025 a 19/09/2025</p>
+      <p>📅 Recuperação — <b>29/09/2025 a 03/10/2025</b></p>
+    </div>
+
+    <div class="bimestre-box">
+      <h3>📗 4º Bimestre</h3>
+      <p>📅 <b>Provas:</b> 01/12/2025 a 05/12/2025</p>
+      <p>📅 Recuperação — <b>15/12/2025 a 19/12/2025</b></p>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- MODAL — BOLETINS -->
+<div id="modal-boletins" class="modal">
+  <div class="modal-content">
+    <span class="modal-close" onclick="fecharModal('modal-boletins')">&times;</span>
+
+    <div style="text-align:center;">
+      <div style="font-size:55px; animation: flutuar 2s infinite ease-in-out;">📄</div>
+      <h2 style="font-size:1.7rem; margin-top:10px;">Boletins Escolares</h2>
+    </div>
+
+    <p style="text-align:center; margin-top:12px; font-size:1rem;">
+      Em breve você poderá consultar seu boletim escolar completo aqui.
+    </p>
+
+    <p style="text-align:center; margin-top:8px;">
+      O sistema está sendo configurado para receber as notas.
+    </p>
+
+    <p style="text-align:center; margin-top:8px;">
+      Aguarde! Essa funcionalidade estará disponível em breve ✨
+    </p>
+
+    <div style="text-align:center; margin-top:20px;">
+      <button class="construcao-btn" onclick="fecharModal('modal-boletins')">Entendi</button>
     </div>
   </div>
 </div>
+
+
+<!-- Modal Reuniões -->
+<div id="modal-reunioes" class="modal">
+  <div class="modal-content">
+    <span class="modal-close">&times;</span>
+
+    <h2 style="margin-bottom: 10px;">📌 Reuniões — Pais & Escola</h2>
+    <p style="margin-bottom: 20px;">Confira as datas das reuniões programadas ao longo do ano:</p>
+
+    <div class="lista-modal">
+
+      <div class="item-modal">
+        <h3>📅 Reunião Geral</h3>
+        <p><b>Data:</b> 14/03/2025</p>
+        <p><b>Horário:</b> 18h30</p>
+        <p><b>Local:</b> Auditório da Escola</p>
+      </div>
+
+      <div class="item-modal">
+        <h3>📚 Reunião do 1º Bimestre</h3>
+        <p><b>Data:</b> 10/04/2025</p>
+        <p><b>Horário:</b> 18h00</p>
+        <p><b>Local:</b> Sala 01</p>
+      </div>
+
+      <div class="item-modal">
+        <h3>📚 Reunião do 2º Bimestre</h3>
+        <p><b>Data:</b> 16/06/2025</p>
+        <p><b>Horário:</b> 18h00</p>
+        <p><b>Local:</b> Sala 01</p>
+      </div>
+
+      <div class="item-modal">
+        <h3>📚 Reunião do 3º Bimestre</h3>
+        <p><b>Data:</b> 18/09/2025</p>
+        <p><b>Horário:</b> 18h00</p>
+        <p><b>Local:</b> Sala 01</p>
+      </div>
+
+      <div class="item-modal">
+        <h3>📚 Reunião do 4º Bimestre</h3>
+        <p><b>Data:</b> 28/11/2025</p>
+        <p><b>Horário:</b> 18h00</p>
+        <p><b>Local:</b> Sala 01</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Eventos -->
+<div id="modal-eventos" class="modal">
+  <div class="modal-content">
+    <span class="modal-close">&times;</span>
+
+    <h2 style="margin-bottom: 10px;">🎉 Eventos da Escola</h2>
+    <p style="margin-bottom: 20px;">Veja os próximos eventos onde os pais poderão comparecer:</p>
+
+    <div class="lista-modal">
+
+      <div class="item-modal">
+        <h3>🎈 Feira Cultural</h3>
+        <p><b>Data:</b> 05/04/2025</p>
+        <p>Exposição de trabalhos, apresentações e visitação às salas.</p>
+      </div>
+
+      <div class="item-modal">
+        <h3>🎤 Dia das Mães</h3>
+        <p><b>Data:</b> 10/05/2025</p>
+        <p>Homenagens especiais, músicas e entrega de lembrancinhas.</p>
+      </div>
+
+      <div class="item-modal">
+        <h3>🎭 Festa Junina</h3>
+        <p><b>Data:</b> 22/06/2025</p>
+        <p>Quadrilhas, comidas típicas e brincadeiras para toda a família.</p>
+      </div>
+
+      <div class="item-modal">
+        <h3>📚 Mostra de Ciências</h3>
+        <p><b>Data:</b> 12/09/2025</p>
+        <p>Apresentação de experimentos e projetos dos alunos.</p>
+      </div>
+
+      <div class="item-modal">
+        <h3>🎅 Encerramento do Ano</h3>
+        <p><b>Data:</b> 10/12/2025</p>
+        <p>Apresentações e entrega de certificados.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- MODAL — ÁREA EM CONSTRUÇÃO -->
+<div id="modal-construcao" class="modal">
+  <div class="modal-content construcao-box">
+    <span class="modal-close" onclick="fecharModal('modal-construcao')">&times;</span>
+
+    <div class="construcao-icone">🚧</div>
+
+    <h2 class="construcao-titulo">Área em Construção</h2>
+
+    <p class="construcao-texto">
+      Esta área ainda está sendo desenvolvida. Em breve os professores poderão acessar conteúdo, turmas e lançamentos de notas.
+    </p>
+
+    <button class="construcao-btn" onclick="fecharModal('modal-construcao')">
+      Entendi
+    </button>
+  </div>
+</div>
+
 
 
   <footer class="rodape">
     © 2025 Escola Estadual Sanico Teles
   </footer>
 <script>
-function abrirMenu(){menu.classList.add('ativo');overlay.classList.add('ativo');}
-function fecharMenu(){menu.classList.remove('ativo');overlay.classList.remove('ativo');}
 
-/* TEMA */
-const toggle=document.getElementById('theme-toggle');
-const emoji=document.getElementById('emojiToggle');
-function applyTheme(isDark){
-  document.body.classList.toggle('dark-mode',isDark);
-  emoji.textContent=isDark?"🌙":"🌞";
-  toggle.checked=isDark;
-}
-toggle.addEventListener('change',()=>{
-  applyTheme(toggle.checked);
-  localStorage.setItem('theme',toggle.checked?'dark':'light');
-});
-(function init(){
-  const saved=localStorage.getItem('theme');
-  applyTheme(saved==="dark");
-})();
+  // menu
+  function abrirMenu(){ document.getElementById('menu').classList.add('ativo'); document.getElementById('overlay').classList.add('ativo'); }
+  function fecharMenu(){ document.getElementById('menu').classList.remove('ativo'); document.getElementById('overlay').classList.remove('ativo'); }
+
+  /* TEMA */
+  const toggle = document.getElementById('theme-toggle');
+  const emoji = document.getElementById('emojiToggle');
+  function applyTheme(isDark){
+    document.body.classList.toggle('dark-mode', isDark);
+    emoji.textContent = isDark ? "🌙" : "🌞";
+    toggle.checked = isDark;
+  }
+  toggle.addEventListener('change', () => {
+    applyTheme(toggle.checked);
+    localStorage.setItem('theme', toggle.checked ? 'dark' : 'light');
+  });
+  (function init(){
+    const saved = localStorage.getItem('theme');
+    applyTheme(saved === "dark");
+  })();
+
+  // abrir / fechar modais por id
+  function abrirModal(id){
+    const m = document.getElementById(id);
+    if (m) m.style.display = "flex";
+  }
+  function fecharModal(id){
+    const m = document.getElementById(id);
+    if (m) m.style.display = "none";
+  }
+
+  // listeners seguros após DOM carregado
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1) fechar ao clicar em qualquer elemento que pareça um "fechar":
+    // detecta elementos com classes comuns (modal-close, close) ou atributo data-close
+    document.querySelectorAll('.modal-close, .close, [data-close]').forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        const modal = this.closest('.modal');
+        if (modal) modal.style.display = 'none';
+      });
+    });
+
+    // 2) delegação: se algo com data-close no futuro for adicionado, também funciona
+    document.body.addEventListener('click', (e) => {
+      const el = e.target;
+      if (el.matches('[data-close]')) {
+        const modal = el.closest('.modal');
+        if (modal) modal.style.display = 'none';
+      }
+    });
+
+    // 3) fechar ao clicar fora da caixa (.modal-content)
+    document.querySelectorAll('.modal').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        // se o clique foi exatamente no fundo do modal (não em seus filhos), fecha
+        if (e.target === modal) modal.style.display = 'none';
+      });
+    });
+
+    // 4) fechar com Esc
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        document.querySelectorAll('.modal').forEach(m => {
+          if (m.style.display === 'flex') m.style.display = 'none';
+        });
+      }
+    });
+  });
 </script>
+
+
 </body>
 </html>
