@@ -276,32 +276,119 @@ input:checked + .slider .emoji {
   margin-bottom: 20px;
 }
 
-/* CARDS */
+/* ACESSO RÁPIDO MELHORADO - Tamanho menor e modo escuro corrigido */
 .acesso-rapido {
-  width: 80%;
-  margin: 15px auto;
+  width: 80%; /* alinhado com os balões */
+  margin: 20px auto 40px auto;
   display: flex;
-  gap: 18px;
+  gap: 20px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .card {
   flex: 1;
-  min-width: 240px;
+  min-width: 200px; /* cards menores */
+  
+  background: linear-gradient(145deg, var(--card-bg), #f0f4ff);
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+body.dark-mode .card {
+  background: #1e1e1e; /* fundo escuro uniforme, parecido com os balões */
+  border: 1px solid #333; /* borda discreta */
+  box-shadow: 0 4px 12px rgba(255,255,255,0.05); /* sombra suave */
+  color: #e7e7e7;
+}
+
+body.dark-mode .card h2 {
+  color: #a8c0ff; /* destaque do título, similar ao gradiente dos balões */
+  text-shadow: 0 0 6px rgba(168,192,255,0.2);
+}
+
+body.dark-mode .card p {
+  color: #dcdcdc; /* texto levemente acinzentado para melhor leitura */
+}
+
+body.dark-mode .card:hover {
+  background: #2a2a2a; /* efeito hover mais suave */
+  box-shadow: 0 8px 20px rgba(255,255,255,0.08); /* realce sutil */
+  transform: translateY(-6px);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+  background: linear-gradient(145deg, #e3e9ff, #dbe6ff);
+}
+
+
+
+.card h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--primary);
+  text-shadow: 0 0 6px rgba(19,79,189,0.2);
+}
+
+.card p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+/* Ícones nos cards */
+.card:nth-child(1)::before {
+  content: "🎓";
+  display: block;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.card:nth-child(2)::before {
+  content: "👪";
+  display: block;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.card:nth-child(3)::before {
+  content: "📚";
+  display: block;
+  font-size: 32px;
+  margin-bottom: 10px;
 }
 
 /* FOOTER */
-.footer {
-  width: 100%;
-  background: var(--primary);
-  color: #fff;
+.rodape {
   text-align: center;
   padding: 18px 0;
-  margin-top: 45px;
-  font-size: 16px;
-  font-weight: bold;
-  box-shadow: 0 -3px 12px rgba(0,0,0,0.25);
+  margin-top: 40px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  background: rgb(19, 79, 189); /* mesma cor do topo */
+  border-top: 2px solid rgba(0,153,255,0.4);
+  box-shadow: 0 0 25px rgba(0,153,255,0.4);
+  backdrop-filter: blur(3px);
 }
+
+body.dark-mode .rodape {
+  background:  rgb(19, 79, 189);
+  color: #ffffff;
+  border-top: 2px solid rgba(0,153,255,0.4);
+  box-shadow: 0 0 25px rgba(0,153,255,0.4);
+}
+
 </style>
 
 </head>
@@ -350,7 +437,7 @@ input:checked + .slider .emoji {
   </p>
 
   <div class="button-container">
-    <button class="cta-button">saber mais</button>
+    <button class="cta-button"  onclick="window.location.href='historia.html'">saber mais</button>
   </div>
 </section>
 
@@ -386,12 +473,17 @@ input:checked + .slider .emoji {
 
 
 <!-- FOOTER -->
-<footer class="footer">
- © 2025 Escola Estadual Sanico Teles
+<footer class="rodape">
+  © 2025 Escola Estadual Sanico Teles
 </footer>
 
+
 <!-- SCRIPT -->
+
 <script>
+// MENU
+const menu = document.getElementById("menu");
+const overlay = document.getElementById("overlay");
 
 function abrirMenu() {
   menu.classList.add("ativo");
@@ -403,31 +495,36 @@ function fecharMenu() {
   overlay.classList.remove("ativo");
 }
 
-const menu = document.getElementById("menu");
-const overlay = document.getElementById("overlay");
-
 // TEMA
 const toggle = document.getElementById("theme-toggle");
 const emoji = document.querySelector(".emoji");
 
-toggle.addEventListener("change", () => {
-  document.body.classList.toggle("dark-mode");
-  emoji.textContent = toggle.checked ? "🌙" : "🌞";
-  localStorage.setItem("tema", toggle.checked ? "dark" : "light");
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const temaSalvo = localStorage.getItem("tema");
-
-  if (temaSalvo === "dark") {
+// Função para aplicar tema
+function aplicarTema(tema) {
+  if (tema === "dark") {
     document.body.classList.add("dark-mode");
     toggle.checked = true;
     emoji.textContent = "🌙";
   } else {
+    document.body.classList.remove("dark-mode");
+    toggle.checked = false;
     emoji.textContent = "🌞";
   }
+}
 
-  // DATA — mês e ano automáticos
+// Alterna tema ao clicar
+toggle.addEventListener("change", () => {
+  const novoTema = toggle.checked ? "dark" : "light";
+  aplicarTema(novoTema);
+  localStorage.setItem("tema", novoTema);
+});
+
+// Aplica tema salvo ao carregar a página
+document.addEventListener("DOMContentLoaded", () => {
+  const temaSalvo = localStorage.getItem("tema") || "light";
+  aplicarTema(temaSalvo);
+
+  // Código do seu index para eventos do mês
   const meses = [
     "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
@@ -439,19 +536,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("mes-atual").textContent = meses[mesAtual];
 
-  // -------------------------------
-  // NOVOS EVENTOS FIXOS
-  // -------------------------------
-
   const eventos = [
-    { data: new Date(anoAtual, 10, 15), descricao: "Proclamação Da Republica" }, // 15/11
-    { data: new Date(anoAtual, 10, 20), descricao: "Dia da Consciência Negra" }  // 20/11
+    { data: new Date(anoAtual, 10, 15), descricao: "Proclamação da República" }, 
+    { data: new Date(anoAtual, 10, 20), descricao: "Dia da Consciência Negra" }  
   ];
 
-  // Filtrar só eventos do mês atual
   const eventosDoMes = eventos.filter(e => e.data.getMonth() === mesAtual);
-
-  // Exibir os eventos
   const box = document.getElementById("eventos-mes");
 
   if (eventosDoMes.length === 0) {
@@ -463,10 +553,20 @@ document.addEventListener("DOMContentLoaded", () => {
       box.innerHTML += `• <b>${dia}</b> — ${e.descricao}<br>`;
     });
   }
+});
 
+// Atualiza tema em todas as abas quando mudar em outra
+window.addEventListener("storage", (e) => {
+  if (e.key === "tema") {
+    aplicarTema(e.newValue);
+  }
 });
 
 </script>
+
+
+
+
 
 </body>
 </html>
