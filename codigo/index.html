@@ -6,7 +6,6 @@
 <title>Escola Estadual Sanico Teles</title>
 
 <style>
-
 /* ------------------------------------------
    VARIÁVEIS DO TEMA
 ------------------------------------------ */
@@ -50,7 +49,6 @@ body {
   background: var(--bg-color);
   color: var(--text-color);
   transition: .25s;
-
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -263,9 +261,7 @@ input:checked + .slider .emoji {
   transform: scale(1.05);
 }
 
-/* ------------------------------------------
-   TEXTO ESTILIZADO (IGUAL AO DE CIMA)
------------------------------------------- */
+/* TEXTO ESTILIZADO */
 .texto-bonito,
 .data-hoje {
   font-size: 17px;
@@ -294,35 +290,7 @@ input:checked + .slider .emoji {
   min-width: 240px;
 }
 
-/* ------------------------------------------
-   CALENDÁRIO AUTOMÁTICO
------------------------------------------- */
-#calendario table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: center;
-  margin-top: 15px;
-}
-
-#calendario th {
-  padding: 10px;
-  background: var(--primary);
-  color: #fff;
-}
-
-#calendario td {
-  padding: 10px;
-  border: 1px solid var(--card-border);
-}
-
-#calendario td:hover {
-  background: rgba(19,79,189,0.15);
-  cursor: pointer;
-}
-
-/* ------------------------------------------
-   FOOTER
------------------------------------------- */
+/* FOOTER */
 .footer {
   width: 100%;
   background: var(--primary);
@@ -334,16 +302,12 @@ input:checked + .slider .emoji {
   font-weight: bold;
   box-shadow: 0 -3px 12px rgba(0,0,0,0.25);
 }
-
 </style>
 
 </head>
 <body>
 
-<!-- ===========================================
-     TOPO
-=========================================== -->
-
+<!-- TOPO -->
 <div class="topo">
 
   <div style="display:flex; align-items:center; gap:10px;">
@@ -366,7 +330,6 @@ input:checked + .slider .emoji {
 
 </div>
 
-
 <!-- MENU LATERAL -->
 <div id="menu" class="menu-lateral">
   <a href="index.html">Início</a>
@@ -378,13 +341,9 @@ input:checked + .slider .emoji {
 
 <div id="overlay" class="overlay" onclick="fecharMenu()"></div>
 
-<!-- ===========================================
-     SECTIONS
-=========================================== -->
-
+<!-- APRESENTAÇÃO -->
 <h1 class="tit">Apresentação da escola</h1>
 <section class="hero-section">
-
   <p class="texto-bonito">
     A Escola Estadual Sanico Teles oferece Ensino Fundamental, Ensino Médio e cursos técnicos como Informática e Energias Renováveis.  
     Com estrutura moderna e equipes dedicadas, buscamos formar cidadãos preparados para o mundo atual.
@@ -395,60 +354,48 @@ input:checked + .slider .emoji {
   </div>
 </section>
 
-<h1 class="tit">
-  Evento e Notícias do mês de <span id="mes-atual"></span>
-</h1>
+<!-- EVENTOS -->
+<h1 class="tit">Evento e Notícias do mês de <span id="mes-atual"></span></h1>
 
 <section class="hero-section">
-
-  <p class="data-hoje">
-    📅 Mês atual: <span id="mes-ano-atual"></span>
-  </p>
+  <p class="data-hoje" id="eventos-mes"></p>
 
   <div class="button-container">
     <button class="cta-button" onclick="window.location.href='eventos.html'">ver calendário</button>
   </div>
 </section>
 
+<!-- ACESSO RÁPIDO -->
 <h1 class="tit">Acesso rápido</h1>
 <div class="acesso-rapido">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <div class="card">
     <h2>Área para o aluno</h2>
-    <p>Lorem ipsum dolor sit amet...</p>
+    <p><i class="fa-solid fa-wrench"></i> em obras</p>
+
   </div>
 
   <div class="card">
     <h2>Área para os pais</h2>
-    <p>Lorem ipsum dolor sit amet...</p>
+    <p><i class="fa-solid fa-wrench"></i> em obras</p>
+
   </div>
 
   <div class="card">
     <h2>Área para os professores</h2>
-    <p>Lorem ipsum dolor sit amet...</p>
+    <p><i class="fa-solid fa-wrench"></i> em obras</p>
+
   </div>
 
 </div>
 
-<!-- ============================
-     CALENDÁRIO AUTOMÁTICO
-============================= -->
-<h1 class="tit">Calendário do mês</h1>
-
-<section class="hero-section">
-  <div id="calendario"></div>
-</section>
-
-<!-- ===========================================
-     FOOTER
-=========================================== -->
+<!-- FOOTER -->
 <footer class="footer">
  © 2025 Escola Estadual Sanico Teles
 </footer>
 
-<!-- ===========================================
-     SCRIPT
-=========================================== -->
+<!-- SCRIPT -->
 <script>
 
 function abrirMenu() {
@@ -484,76 +431,45 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     emoji.textContent = "🌞";
   }
-});
 
-// DATA — mês e ano automáticos
-document.addEventListener("DOMContentLoaded", function () {
-
+  // DATA — mês e ano automáticos
   const meses = [
     "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
   ];
 
   const agora = new Date();
-  const mes = meses[agora.getMonth()];
-  const ano = agora.getFullYear();
+  const mesAtual = agora.getMonth();
+  const anoAtual = agora.getFullYear();
 
-  document.getElementById("mes-atual").textContent = mes;
-  document.getElementById("mes-ano-atual").textContent = `${mes} de ${ano}`;
-});
+  document.getElementById("mes-atual").textContent = meses[mesAtual];
 
+  // -------------------------------
+  // NOVOS EVENTOS FIXOS
+  // -------------------------------
 
-// ===== CALENDÁRIO AUTOMÁTICO =====
-function gerarCalendario() {
-  const calendario = document.getElementById("calendario");
-
-  const meses = [
-    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+  const eventos = [
+    { data: new Date(anoAtual, 10, 15), descricao: "Proclamação Da Republica" }, // 15/11
+    { data: new Date(anoAtual, 10, 20), descricao: "Dia da Consciência Negra" }  // 20/11
   ];
 
-  const hoje = new Date();
-  const mes = hoje.getMonth();
-  const ano = hoje.getFullYear();
+  // Filtrar só eventos do mês atual
+  const eventosDoMes = eventos.filter(e => e.data.getMonth() === mesAtual);
 
-  const primeiroDia = new Date(ano, mes, 1).getDay();
-  const totalDias = new Date(ano, mes + 1, 0).getDate();
+  // Exibir os eventos
+  const box = document.getElementById("eventos-mes");
 
-  let tabela = `
-    <h2 style="text-align:center; margin-bottom:15px;">
-      ${meses[mes]} de ${ano}
-    </h2>
-    <table>
-      <tr>
-        <th>Dom</th><th>Seg</th><th>Ter</th><th>Qua</th>
-        <th>Qui</th><th>Sex</th><th>Sáb</th>
-      </tr>
-      <tr>
-  `;
-
-  let diaSemana = 0;
-
-  for (let i = 0; i < primeiroDia; i++) {
-    tabela += "<td></td>";
-    diaSemana++;
+  if (eventosDoMes.length === 0) {
+    box.innerHTML = "Nenhum evento cadastrado para este mês.";
+  } else {
+    box.innerHTML = `📅 Eventos de ${meses[mesAtual]}:<br><br>`;
+    eventosDoMes.forEach(e => {
+      const dia = e.data.getDate();
+      box.innerHTML += `• <b>${dia}</b> — ${e.descricao}<br>`;
+    });
   }
 
-  for (let dia = 1; dia <= totalDias; dia++) {
-    tabela += `<td>${dia}</td>`;
-    diaSemana++;
-
-    if (diaSemana === 7) {
-      tabela += "</tr><tr>";
-      diaSemana = 0;
-    }
-  }
-
-  tabela += "</tr></table>";
-
-  calendario.innerHTML = tabela;
-}
-
-gerarCalendario();
+});
 
 </script>
 
